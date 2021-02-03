@@ -1,0 +1,38 @@
+{
+  "name": "compendium-tools",
+  "title": "Compendium Tools",
+  "description": "Tools to make creating and updating compendium modules easier.",
+  "author": "Jeff 'Arbron' Hitchcock",
+  "authors": [
+    {
+      "name": "Jeff 'Arbron' Hitchcock",
+      "url": "https://moviemaps.org",
+      "email": "jeff@szed.co",
+      "discord": "arbron#6515",
+      "twitter": "@arbron"
+    }
+  ],
+  "url": "https://github.com/arbron/fvtt-compendium-tools",
+  "manifest": "https://raw.githubusercontent.com/arbron/fvtt-compendium-tools/main/module.json",
+  "download": "",
+  "readme": "",
+  "changelog": "",
+  "bugs": "https://github.com/arbron/fvtt-compendium-tools/issues",
+  "version": "0.0.1",
+  "minimumCoreVersion": "0.7.0",
+  "compatibleCoreVersion": "0.7.9",
+  "manifestPlusVersion": "1.0.0",
+  "esmodules": [
+    "./scripts/main.js"
+  ],
+  "styles": [
+    "./styles/stylesheet.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ]
+}
