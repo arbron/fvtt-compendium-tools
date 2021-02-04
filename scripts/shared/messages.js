@@ -11,5 +11,5 @@ export function log(message) {
 };
 
 function formatMessage(message) {
-  return `${game.i18n.localize('CompendiumTools.Title')} | ${message}`;
+  return `${constants.moduleLabel} | ${message}`;
 };

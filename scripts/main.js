@@ -1,13 +1,15 @@
 import constants from './shared/constants.js';
 import { log } from './shared/messages.js';
-import { patchCompendiumMenus } from './patches.js';
+import { patchCompendiumCanModify, patchCompendiumMenus } from './patches.js';
 import { ReplaceEntry } from './ReplaceEntry.js';
+import { CTSettings } from './settings.js';
 
-Hooks.on('init', () => {
-  
+Hooks.once('init', () => {
+  CTSettings.init();
 });
 
 Hooks.on('setup', () => {
+  patchCompendiumCanModify();
   patchCompendiumMenus();
 });
 

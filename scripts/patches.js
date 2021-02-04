@@ -1,4 +1,27 @@
 import { log } from './shared/messages.js';
+import { CTSettings } from './settings.js';
+
+/**
+ * Money patch private Compendium._assertUserCanModify method to respect
+ * the bypass edit lock setting.
+ */
+export function patchCompendiumCanModify() {
+  log('Patching Compendium._assertUserCanModify');
+  const compendiumAssertUserCanModify = Compendium.prototype._assertUserCanModify;
+
+  /**
+   * Validate that the current user is able to modify content of this Compendium pack
+   * @return {boolean}
+   * @private
+   */
+  Compendium.prototype._assertUserCanModify = function(options={}) {
+    if (CTSettings.bypassEditLock) {
+      options.requireUnlocked = false;
+    }
+    compendiumAssertUserCanModify.bind(this)(options);
+  }
+}
+
 
 /**
  * Money patch private Compendium._contextMenu method to call a hook before

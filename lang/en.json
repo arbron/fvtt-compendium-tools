@@ -1,6 +1,9 @@
 {
   "CompendiumTools.Title": "Arbron's Compendium Tools",
 
+  "CompendiumTools.bypassEditLock.name": "Bypass Edit Lock",
+  "CompendiumTools.bypassEditLock.hint": "Allows for editing Compendiums even when they are locked or belong to a module. Warning: Changes made to modules you do not control will be overwritten when the module is updated.",
+
   "CompendiumTools.ReplaceEntry": "Replace Entry",
   "CompendiumTools.ReplaceDropArea": "Drop Replacement Here"
 }
