@@ -6,7 +6,10 @@ import { log } from './shared/messages.js';
  * in a Compendium with another item of the same type.
  */
 export class ReplaceEntry extends Application {
-  constructor(compendium, entryId, options) {
+  constructor(compendium, entryId, options = {}) {
+    options.top = compendium.position.top;
+    options.left = ReplaceEntry._getLeftPosition(compendium.position);
+
     super(options);
 
     this.compendium = compendium;
@@ -20,14 +23,19 @@ export class ReplaceEntry extends Application {
       title: game.i18n.localize('CompendiumTools.ReplaceEntry'),
       width: 400,
       height: 300,
-      top: 120,
-      left: 200,
       // TODO: Position relative to Compendium that opened it
       // Top = Compendium Top, Left = Compendium Right + 10
       // Unless Compendium is near the right side of screen, then position on left side
       classes: ['ct-replace-entry'],
       dragDrop: [{ dragSelector: '.directory-item', dropSelector: '.drop-area' }]
     });
+  }
+
+  static _getLeftPosition(position) {
+    const right = position.left + position.width;
+    if (right < window.innerWidth - 460) return right + 10;
+
+    return position.left - 410;
   }
 
   /** @override */
@@ -67,6 +75,7 @@ export class ReplaceEntry extends Application {
     this.compendium.updateEntity(entityData);
 
     // TODO: Provide comparison about replacement info and confirmation button
-    // TODO: Automatically close window when complete
+
+    await this.close();
   }
 }
