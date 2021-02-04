@@ -21,11 +21,8 @@ export class ReplaceEntry extends Application {
     return mergeObject(super.defaultOptions, {
       template: `${constants.templateRoot}/replaceEntry.html`,
       title: game.i18n.localize('CompendiumTools.ReplaceEntry'),
-      width: 400,
-      height: 300,
-      // TODO: Position relative to Compendium that opened it
-      // Top = Compendium Top, Left = Compendium Right + 10
-      // Unless Compendium is near the right side of screen, then position on left side
+      width: constants.replaceEntryWidth,
+      height: constants.replaceEntryHeight,
       classes: ['ct-replace-entry'],
       dragDrop: [{ dragSelector: '.directory-item', dropSelector: '.drop-area' }]
     });
@@ -33,9 +30,11 @@ export class ReplaceEntry extends Application {
 
   static _getLeftPosition(position) {
     const right = position.left + position.width;
-    if (right < window.innerWidth - 460) return right + 10;
+    if (right < window.innerWidth - constants.replaceEntryWidth + 60) {
+      return right + 10;
+    }
 
-    return position.left - 410;
+    return position.left - constants.replaceEntryWidth - 10;
   }
 
   /** @override */
