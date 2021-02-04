@@ -1,0 +1,15 @@
+.ct-replace-entry .drop-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  border: 1px inset black;
+  background: rgba(0, 0, 0, 0.15);
+}
+.ct-replace-entry .drop-area strong {
+  text-align: center;
+  font-size: 2em;
+}

@@ -3,4 +3,8 @@
 Various tools to help with authoring compendium modules.
 
 ## Tools
-- **Replace Item**: Replace compendium entries with a saved item while retaining the item's ID to prevent breaking of links between items in the compendium.
+- **Replace Entry**: Replace compendium entries with a saved item while retaining the item's ID. This will prevent breaking of links between items in the compendium.
+
+
+## Developer Tools
+- **ctGetCompendiumItemContext**: New Hook called when the context menus for Compendium entries are generated to allow module developers to add their own context menu items.

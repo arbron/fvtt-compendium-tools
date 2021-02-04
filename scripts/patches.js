@@ -39,7 +39,7 @@ export function patchCompendiumMenus() {
         }
       }
     ];
-    Hooks.call('ctGetCompendiumItemContext', html, menuOptions);
+    Hooks.call('ctGetCompendiumItemContext', this, html, menuOptions);
     if (menuOptions) new ContextMenu(html, '.directory-item', menuOptions);
   };
 }
