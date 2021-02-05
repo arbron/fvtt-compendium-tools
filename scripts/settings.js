@@ -8,7 +8,7 @@ const BYPASS_EDIT_LOCK = 'bypass-edit-lock';
 
 class Settings {
   init() {
-    log('Regsitering settings');
+    log('Registering settings');
     const localize = game.i18n.localize;
     register(BYPASS_EDIT_LOCK, {
       name: game.i18n.localize('CompendiumTools.bypassEditLock.name'),
