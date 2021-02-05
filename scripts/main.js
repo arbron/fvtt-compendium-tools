@@ -20,7 +20,7 @@ Hooks.on('ready', () => {
 Hooks.on('ctGetCompendiumItemContext', (compendium, html, menuOptions) => {
   let insertIndex = menuOptions.findIndex(element => element.name == 'COMPENDIUM.ImportEntry');
   menuOptions.splice(insertIndex + 1, 0, {
-    name: 'CompendiumTools.ReplaceEntry',
+    name: 'CompendiumTools.replace.title',
     icon: '<i class="fas fa-sign-in-alt"></i>',
     callback: li => {
       const entryId = li.attr('data-entry-id');

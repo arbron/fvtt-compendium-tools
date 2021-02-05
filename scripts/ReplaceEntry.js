@@ -20,7 +20,7 @@ export class ReplaceEntry extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       template: `${constants.templateRoot}/replaceEntry.html`,
-      title: game.i18n.localize('CompendiumTools.ReplaceEntry'),
+      title: game.i18n.localize('CompendiumTools.replace.title'),
       width: constants.replaceEntryWidth,
       height: constants.replaceEntryHeight,
       classes: ['ct-replace-entry'],
@@ -56,7 +56,6 @@ export class ReplaceEntry extends Application {
       data = JSON.parse(event.dataTransfer.getData('text/plain'));
     }
     catch (err) {
-      log('error processing data');
       return false;
     }
 
@@ -64,16 +63,46 @@ export class ReplaceEntry extends Application {
     if (!data.type) throw new Error("You must define the type of entity being dropped");
 
     // Get the dropped Entity
-    let entity = await this.compendium.cls.fromDropData(data);
-    let entityData = await entity.toCompendium();
+    const originalEntity = await this.compendium.getEntity(this.entryId);
+    const replacementEntity = await this.compendium.cls.fromDropData(data);
 
-    // TODO: Verify replacement entity type matches replaced type
+    // Confirm types match and present confirmation dialog if they do not
+    if (originalEntity.type != replacementEntity.type) {
+      let confirmationDialog = new Dialog({
+        title: game.i18n.localize('CompendiumTools.replace.typeMismatchTitle'),
+        content: game.i18n.format('CompendiumTools.replace.typeMismatchWarning', {
+          originalType: originalEntity.type,
+          replacementType: replacementEntity.type
+        }),
+        buttons: {
+          cancel: {
+            icon: '',
+            label: game.i18n.localize('CompendiumTools.replace.cancelButton'),
+            callback: () => {}
+          },
+          replace: {
+            icon: '',
+            label: game.i18n.localize('CompendiumTools.replace.replaceButton'),
+            callback: () => this._finalizeReplacement(replacementEntity)
+          }
+        },
+        default: 'replace'
+      });
+      confirmationDialog.render(true);
+    } else {
+      this._finalizeReplacement(replacementEntity);
+    }
+  }
 
+  /**
+   * After all checks are done, perform the actual replacement in the Compendium.
+   * @private
+   */
+  async _finalizeReplacement(entity) {
     // Update the existing entry
+    let entityData = await entity.toCompendium();
     entityData._id = this.entryId;
     this.compendium.updateEntity(entityData);
-
-    // TODO: Provide comparison about replacement info and confirmation button
 
     await this.close();
   }
