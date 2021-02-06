@@ -1,5 +1,5 @@
 import constants from './shared/constants.js';
-import { log } from './shared/messages.js';
+import { log, uiError } from './shared/messages.js';
 
 /**
  * The ReplaceEntry class provides an interface for replacing an entry
@@ -62,6 +62,11 @@ export class ReplaceEntry extends Application {
     // Ensure an entity type was indicated
     if (!data.type) throw new Error("You must define the type of entity being dropped");
 
+    if (data.type != this.compendium.entity) {
+      uiError('CompendiumTools.replace.typeError', false);
+      return;
+    }
+
     // Get the dropped Entity
     const originalEntity = await this.compendium.getEntity(this.entryId);
     const replacementEntity = await this.compendium.cls.fromDropData(data);
@@ -69,8 +74,8 @@ export class ReplaceEntry extends Application {
     // Confirm types match and present confirmation dialog if they do not
     if (originalEntity.type != replacementEntity.type) {
       let confirmationDialog = new Dialog({
-        title: game.i18n.localize('CompendiumTools.replace.typeMismatchTitle'),
-        content: game.i18n.format('CompendiumTools.replace.typeMismatchWarning', {
+        title: game.i18n.localize('CompendiumTools.replace.subtypeMismatchTitle'),
+        content: game.i18n.format('CompendiumTools.replace.subtypeMismatchWarning', {
           originalType: originalEntity.type,
           replacementType: replacementEntity.type
         }),

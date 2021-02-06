@@ -6,8 +6,9 @@
 
   "CompendiumTools.replace.title": "Replace Entry",
   "CompendiumTools.replace.dropArea": "Drop Replacement Here",
-  "CompendiumTools.replace.typeMismatchTitle": "Types Don't Match",
-  "CompendiumTools.replace.typeMismatchWarning": "<p>You are trying to replace a <strong>{originalType}</strong> with a <strong>{replacementType}</strong>. Are you sure you would like to do this?</p>",
+  "CompendiumTools.replace.typeError": "You are attempting to replace this item with a type that cannot be stored in this Compendium.",
+  "CompendiumTools.replace.subtypeMismatchTitle": "Types Don't Match",
+  "CompendiumTools.replace.subtypeMismatchWarning": "<p>You are trying to replace a <strong>{originalType}</strong> with a <strong>{replacementType}</strong>. Are you sure you would like to do this?</p>",
   "CompendiumTools.replace.replaceButton": "Replace",
   "CompendiumTools.replace.cancelButton": "Cancel"
 }

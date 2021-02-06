@@ -1,4 +1,4 @@
-# Compendium Tools
+# Arbron's Compendium Tools
 
 Various tools to help with authoring compendium modules.
 
