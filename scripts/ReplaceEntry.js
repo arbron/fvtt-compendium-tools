@@ -72,12 +72,12 @@ export class ReplaceEntry extends Application {
     const replacementEntity = await this.compendium.cls.fromDropData(data);
 
     // Confirm types match and present confirmation dialog if they do not
-    if (originalEntity.type != replacementEntity.type) {
+    if (originalEntity.data.type != replacementEntity.data.type) {
       let confirmationDialog = new Dialog({
         title: game.i18n.localize('CompendiumTools.replace.subtypeMismatchTitle'),
         content: game.i18n.format('CompendiumTools.replace.subtypeMismatchWarning', {
-          originalType: originalEntity.type,
-          replacementType: replacementEntity.type
+          originalType: originalEntity.data.type,
+          replacementType: replacementEntity.data.type
         }),
         buttons: {
           cancel: {
