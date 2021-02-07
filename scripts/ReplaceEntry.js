@@ -80,15 +80,15 @@ export class ReplaceEntry extends Application {
           replacementType: replacementEntity.data.type
         }),
         buttons: {
-          cancel: {
-            icon: '',
-            label: game.i18n.localize('CompendiumTools.replace.cancelButton'),
-            callback: () => {}
-          },
           replace: {
             icon: '',
             label: game.i18n.localize('CompendiumTools.replace.replaceButton'),
             callback: () => this._finalizeReplacement(replacementEntity)
+          },
+          cancel: {
+            icon: '',
+            label: game.i18n.localize('CompendiumTools.replace.cancelButton'),
+            callback: () => {}
           }
         },
         default: 'replace'
