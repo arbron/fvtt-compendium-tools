@@ -20,6 +20,10 @@ export function uiError(localizationKey, toConsole=true) {
   ui.notifications.error(message);
 }
 
+export function makeError(message) {
+  return new Error(formatMessage(message));
+}
+
 function formatMessage(message) {
   return `${constants.moduleLabel} | ${message}`;
 }

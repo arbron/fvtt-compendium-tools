@@ -1,4 +1,5 @@
 import { log } from './shared/messages.js';
+import { Monkey } from './shared/Monkey.js';
 import { CTSettings } from './settings.js';
 
 /**
@@ -7,19 +8,13 @@ import { CTSettings } from './settings.js';
  */
 export function patchCompendiumCanModify() {
   log('Patching Compendium._assertUserCanModify');
-  const compendiumAssertUserCanModify = Compendium.prototype._assertUserCanModify;
 
-  /**
-   * Validate that the current user is able to modify content of this Compendium pack
-   * @return {boolean}
-   * @private
-   */
-  Compendium.prototype._assertUserCanModify = function(options={}) {
+  Monkey.replaceMethod(Compendium, '_assertUserCanModify', function(options={}) {
     if (CTSettings.bypassEditLock) {
       options.requireUnlocked = false;
     }
-    compendiumAssertUserCanModify.bind(this)(options);
-  }
+    return Monkey.callOriginalFunction(this, '_assertUserCanModify', options);
+  });
 }
 
 
@@ -29,40 +24,20 @@ export function patchCompendiumCanModify() {
  */
 export function patchCompendiumMenus() {
   log('Patching Compendium._context_menu');
-  const compendiumContextMenu = Compendium.prototype._contextMenu;
 
-  /**
-   * Render the ContextMenu which applies to each compendium entry
-   * @param html {jQuery}
-   * @private
-   */
-  Compendium.prototype._contextMenu = function(html) {
-    const menuOptions = [
-      {
-        name: "COMPENDIUM.ImportEntry",
-        icon: '<i class="fas fa-download"></i>',
-        callback: li => {
-          const entryId = li.attr('data-entry-id');
-          const entities = this.cls.collection;
-          return entities.importFromCollection(this.collection, entryId, {}, {renderSheet: true});
-        }
-      },
-      {
-        name: "COMPENDIUM.DeleteEntry",
-        icon: '<i class="fas fa-trash"></i>',
-        callback: li => {
-          let entryId = li.attr('data-entry-id');
-          this.getEntity(entryId).then(entry => {
-            return Dialog.confirm({
-              title: `${game.i18n.localize("COMPENDIUM.DeleteEntry")} ${entry.name}`,
-              content: game.i18n.localize("COMPENDIUM.DeleteConfirm"),
-              yes: () => this.deleteEntity(entryId),
-            });
-          });
-        }
-      }
-    ];
-    Hooks.call('ctGetCompendiumItemContext', this, html, menuOptions);
-    if (menuOptions) new ContextMenu(html, '.directory-item', menuOptions);
-  };
+  let PatchedClass = Compendium;
+  PatchedClass = Monkey.patchMethod(PatchedClass, '_contextMenu', [
+    { line: 1,
+      original:  'new ContextMenu(html, ".directory-item", [',
+      replacement: 'return [' },
+    { line: 25,
+      original: ']);',
+      replacement: '];' }
+  ]);
+  Compendium.prototype._getCompendiumContextOptions = PatchedClass.prototype._contextMenu;
+  Monkey.replaceMethod(Compendium, '_contextMenu', function(html) {
+    const contextOptions = this._getCompendiumContextOptions();
+    Hooks.call('ctGetCompendiumItemContext', this, html, contextOptions);
+    if (contextOptions) new ContextMenu(html, '.directory-item', contextOptions);
+  });
 }
