@@ -1,6 +1,6 @@
 import constants from './shared/constants.js';
 import { log } from './shared/messages.js';
-import { patchCompendiumCanModify, patchCompendiumMenus } from './patches.js';
+import { patchCompendiumCanModify, patchCompendiumMenus, patchModuleMenus } from './patches.js';
 import { ReplaceEntry } from './ReplaceEntry.js';
 import { CTSettings } from './settings.js';
 
@@ -11,6 +11,7 @@ Hooks.once('init', () => {
 Hooks.on('setup', () => {
   patchCompendiumCanModify();
   patchCompendiumMenus();
+  patchModuleMenus();
 });
 
 Hooks.on('ready', () => {
