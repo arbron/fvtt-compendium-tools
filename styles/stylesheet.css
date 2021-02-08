@@ -1,3 +1,23 @@
+input[type="url"] {
+  width: calc(100% - 2px);
+  min-width: 20px;
+  height: 26px;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 1px 3px;
+  margin: 0;
+  color: #191813;
+  border: 1px solid #7a7971;
+  border-radius: 3px;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: test;
+  user-select: test;
+}
+input[type="url"]:disabled {
+  border: none;
+  color: #4b4a44;
+}
+
 .ct-replace-entry .drop-area {
   display: flex;
   justify-content: center;
@@ -12,4 +32,17 @@
 .ct-replace-entry .drop-area strong {
   text-align: center;
   font-size: 2em;
+}
+
+.ct-module-configuration .form-header {
+  margin-bottom: 5px;
+  border-top: 1px solid #b5b3a4;
+  border-bottom: 1px solid #f0f0e0;
+}
+.ct-module-configuration .form-header h3 {
+  margin: 0;
+  border-top: 1px solid #f0f0e0;
+  border-bottom: 1px solid #b5b3a4;
+
+  line-height: 28px;
 }
