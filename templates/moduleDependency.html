@@ -1,0 +1,17 @@
+<div class="form-entry">
+  <div class="form-group">
+    <div class="form-fields">
+      <input type="text" name="dependency-{{ index }}-name" value="{{ dependency.name }}" data-dtype="String" />
+
+      <select name="dependency-{{ index }}-type" data-dtype="String">
+      {{#select dependency.type}}
+        <option value="module">{{ localize "CompendiumTools.module.typeModule" }}</option>
+        <option value="system">{{ localize "CompendiumTools.module.typeSystem" }}</option>
+        <option value="world">{{ localize "CompendiumTools.module.typeWorld" }}</option>
+      {{/select}}
+      </select>
+
+      <input type="url" name="dependency-{{ index }}-manifest" value="{{ dependency.manifest }}" data-dtype="String" />
+    </div>
+  </div>
+</div>

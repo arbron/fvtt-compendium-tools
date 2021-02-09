@@ -1,0 +1,18 @@
+<div class="form-entry">
+  <div class="form-group">
+    <div class="form-fields">
+      <input type="text" name="conflict-{{ index }}-name" value="{{ conflict.name }}" data-dtype="String" />
+
+      <select name="conflict-{{ index }}-type" data-dtype="String">
+      {{#select conflict.type}}
+        <option value="module">{{ localize "CompendiumTools.module.typeModule" }}</option>
+        <option value="system">{{ localize "CompendiumTools.module.typeSystem" }}</option>
+        <option value="world">{{ localize "CompendiumTools.module.typeWorld" }}</option>
+      {{/select}}
+      </select>
+
+      <input type="text" name="versionMin" value="{{ conflict.versionMin }}" data-dtype="string" />
+      <input type="text" name="versionMax" value="{{ conflict.versionMax }}" data-dtype="string" />
+    </div>
+  </div>
+</div>

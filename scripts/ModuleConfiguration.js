@@ -44,6 +44,11 @@ export class ModuleConfiguration extends FormApplication {
 
 export function prepareModuleConfigurationTemplates() {
   registerPartial('moduleAuthor', 'moduleAuthor.html');
+  registerPartial('moduleConflict', 'moduleConflict.html');
+  registerPartial('moduleDependency', 'moduleDependency.html');
+  registerPartial('moduleInclude', 'moduleInclude.html');
+  registerPartial('moduleLanguage', 'moduleLanguage.html');
+  registerPartial('moduleMedia', 'moduleMedia.html');
   registerPartial('modulePack', 'modulePack.html');
   registerPartial('moduleScript', 'moduleScript.html');
   registerPartial('moduleStyle', 'moduleStyle.html');

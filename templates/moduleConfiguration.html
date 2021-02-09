@@ -7,14 +7,14 @@
   <div class="form-group required">
     <label>{{ localize "CompendiumTools.module.name" }}</label>
     <div class="form-fields">
-      <input type="text" name="name" value="{{ module.name }}" data-dtype="string" />
+      <input type="text" name="name" value="{{ module.name }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group required">
     <label>{{ localize "CompendiumTools.module.title" }}</label>
     <div class="form-fields">
-      <input type="text" name="title" value="{{ module.title }}" data-dtype="string" />
+      <input type="text" name="title" value="{{ module.title }}" data-dtype="String" />
     </div>
   </div>
 
@@ -25,10 +25,32 @@
     </div>
   </div>
 
-  <!-- system -->
-  <!-- socket [BOOL] -->
-  <!-- library [BOOL] -->
-  <!-- deprecated [BOOL] -->
+  <div class="form-group">
+    <label>{{ localize "CompendiumTools.module.system" }}</label>
+    <div class="form-fields">
+      <input type="text" name="system" value="{{ module.system }}" data-dtype="String" />
+    </div>
+    <!-- TODO: Support arrays of systems. -->
+  </div>
+
+  <div class="form-group">
+    <label>{{ localize "CompendiumTools.module.flags" }}</label>
+    <div class="form-fields">
+      <label class="checkbox">
+        {{ localize "CompendiumTools.module.socket" }}
+        <input type="checkbox" name="socket" value="0" data-dtype="Boolean" {{ checked module.socket }} />
+      </label>
+      <label class="checkbox">
+        {{ localize "CompendiumTools.module.library" }}
+        <input type="checkbox" name="library" value="0" data-dtype="Boolean" {{ checked module.library }} />
+      </label>
+      <label class="checkbox">
+        {{ localize "CompendiumTools.module.deprecated" }}
+        <input type="checkbox" name="deprecated" value="0" data-dtype="Boolean" {{ checked module.deprecated }} />
+      </label>
+    </div>
+  </div>
+
     <!-- coreVersion, reason, alternatives (name, manifest) -->
 
 
@@ -40,7 +62,7 @@
   <div class="form-group required">
     <label>{{ localize "CompendiumTools.module.version" }}</label>
     <div class="form-fields">
-      <input type="text" name="version" value="{{ module.version }}" data-dtype="string" />
+      <input type="text" name="version" value="{{ module.version }}" data-dtype="String" />
     </div>
   </div>
 
@@ -48,13 +70,13 @@
     <label>{{ localize "CompendiumTools.module.versionCore" }}</label>
     <div class="form-fields">
       <label class="grid-label">{{ localize "CompendiumTools.module.versionCoreMinimum" }}</label>
-      <input type="text" name="minimumCoreVersion" value="{{ module.minimumCoreVersion }}" data-dtype="string" />
+      <input type="text" name="minimumCoreVersion" value="{{ module.minimumCoreVersion }}" data-dtype="String" />
       <label class="grid-label">{{ localize "CompendiumTools.module.versionCoreCompatible" }}</label>
-      <input type="text" name="compatibleCoreVersion" value="{{ module.compatibleCoreVersion }}" data-dtype="string" />
+      <input type="text" name="compatibleCoreVersion" value="{{ module.compatibleCoreVersion }}" data-dtype="String" />
     </div>
   </div>
 
-  <input type="hidden" name="manifestPlusVersion" value="{{ module.manifestPlusVersion }}" data-dtype="string" />
+  <input type="hidden" name="manifestPlusVersion" value="{{ module.manifestPlusVersion }}" data-dtype="String" />
 
 
   <!-- Authorship -->
@@ -65,7 +87,7 @@
   <div class="form-group required">
     <label>{{ localize "CompendiumTools.module.author" }}</label>
     <div class="form-fields">
-      <input type="text" name="author" value="{{ module.author }}" data-dtype="string" />
+      <input type="text" name="author" value="{{ module.author }}" data-dtype="String" />
     </div>
   </div>
 
@@ -84,49 +106,49 @@
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.url" }}</label>
     <div class="form-fields">
-      <input type="url" name="url" value="{{ module.url }}" data-dtype="string" />
+      <input type="url" name="url" value="{{ module.url }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.manifest" }}</label>
     <div class="form-fields">
-      <input type="url" name="manifest" value="{{ module.manifest }}" data-dtype="string" />
+      <input type="url" name="manifest" value="{{ module.manifest }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.download" }}</label>
     <div class="form-fields">
-      <input type="url" name="download" value="{{ module.download }}" data-dtype="string" />
+      <input type="url" name="download" value="{{ module.download }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.license" }}</label>
     <div class="form-fields">
-      <input type="url" name="license" value="{{ module.license }}" data-dtype="string" />
+      <input type="url" name="license" value="{{ module.license }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.readme" }}</label>
     <div class="form-fields">
-      <input type="url" name="readme" value="{{ module.readme }}" data-dtype="string" />
+      <input type="url" name="readme" value="{{ module.readme }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.changelog" }}</label>
     <div class="form-fields">
-      <input type="url" name="changelog" value="{{ module.changelog }}" data-dtype="string" />
+      <input type="url" name="changelog" value="{{ module.changelog }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.bugs" }}</label>
     <div class="form-fields">
-      <input type="url" name="bugs" pvalue="{{ module.bugs }}" data-dtype="string" />
+      <input type="url" name="bugs" value="{{ module.bugs }}" data-dtype="String" />
     </div>
   </div>
 
@@ -137,6 +159,14 @@
   </header>
 
   <div class="form-list">
+    <div class="form-group">
+      <label>{{ localize "CompendiumTools.module.name" }}</label>
+      <label>{{ localize "CompendiumTools.module.label" }}</label>
+      <label>{{ localize "CompendiumTools.module.path" }}</label>
+      <label>{{ localize "CompendiumTools.module.type" }}</label>
+      <label>{{ localize "CompendiumTools.module.packSystem" }}</label>
+    </div>
+
     {{#each module.packs as |pack| }}
       {{> modulePack pack=pack index=@index }}
     {{/each}}
@@ -149,6 +179,11 @@
   </header>
 
   <div class="form-list">
+    <div class="form-group">
+      <label>{{ localize "CompendiumTools.module.path" }}</label>
+      <label>{{ localize "CompendiumTools.module.type" }}</label>
+    </div>
+
     {{#each module.combinedScripts as |script| }}
       {{> moduleScript script=script index=@index }}
     {{/each}}
@@ -171,33 +206,77 @@
   <header class="form-header">
     <h3><i class="fas fa-sitemap"></i> {{ localize "CompendiumTools.module.headerDependencies" }}</h3>
   </header>
-    <!-- name, type, manifest -->
+
+  <div class="form-list">
+    <div class="form-group">
+      <label>{{ localize "CompendiumTools.module.name" }}</label>
+      <label>{{ localize "CompendiumTools.module.type" }}</label>
+      <label>{{ localize "CompendiumTools.module.dependencyManifest" }}</label>
+    </div>
+
+    {{#each module.dependencies as |dependency| }}
+      {{> moduleDependency dependency=dependency index=@index }}
+    {{/each}}
+  </div>
 
 
   <!-- Conflicts -->
   <header class="form-header">
     <h3><i class="fas fa-exclamation-circle"></i> {{ localize "CompendiumTools.module.headerConflicts" }}</h3>
   </header>
-    <!-- name, type, versionMin, versionMax -->
+
+  <div class="form-list">
+    <div class="form-group">
+      <label>{{ localize "CompendiumTools.module.conflictName" }}</label>
+      <label>{{ localize "CompendiumTools.module.conflictType" }}</label>
+      <label>{{ localize "CompendiumTools.module.conflictMinVersion" }}</label>
+      <label>{{ localize "CompendiumTools.module.conflictMaxVersion" }}</label>
+    </div>
+
+    {{#each module.conflicts as |conflict| }}
+      {{> moduleConflict conflict=conflict index=@index }}
+    {{/each}}
+  </div>
 
 
   <!-- Languages -->
   <header class="form-header">
     <h3><i class="fas fa-language"></i> {{ localize "CompendiumTools.module.headerLanguages" }}</h3>
   </header>
-    <!-- lang, name, path -->
+
+  <div class="form-list">
+    <div class="form-group">
+      <label>{{ localize "CompendiumTools.module.languageCode" }}</label>
+      <label>{{ localize "CompendiumTools.module.languageName" }}</label>
+      <label>{{ localize "CompendiumTools.module.path" }}</label>
+    </div>
+
+    {{#each module.languages as |language| }}
+      {{> moduleLanguage language=language index=@index }}
+    {{/each}}
+  </div>
 
 
   <!-- Media -->
   <header class="form-header">
     <h3><i class="fas fa-photo-video"></i> {{ localize "CompendiumTools.module.headerMedia" }}</h3>
   </header>
-    <!-- type (cover, icon, screenshot, video), url, loop, thumbnail -->
+
+  <div class="form-list">
+    {{#each module.media as |media| }}
+      {{> moduleMedia media=media index=@index }}
+    {{/each}}
+  </div>
 
 
   <!-- Includes -->
   <header class="form-header">
     <h3><i class="fas fa-copy"></i> {{ localize "CompendiumTools.module.headerIncludes" }}</h3>
   </header>
-    <!-- path -->
+
+  <div class="form-list">
+    {{#each module.includes as |path| }}
+      {{> moduleInclude path=path index=@index }}
+    {{/each}}
+  </div>
 </form>

@@ -1,0 +1,36 @@
+<div class="form-entry">
+  <div class="form-group">
+    <label>{{ localize "CompendiumTools.module.mediaType" }}</label>
+    <div class="form-fields">
+      <select name="media-{{ index }}-type" data-dtype="String">
+      {{#select media.type}}
+        <option value="cover">{{ localize "CompendiumTools.module.mediaCover" }}</option>
+        <option value="icon">{{ localize "CompendiumTools.module.mediaIcon" }}</option>
+        <option value="screenshot">{{ localize "CompendiumTools.module.mediaScreenshot" }}</option>
+        <option value="video">{{ localize "CompendiumTools.module.mediaVideo" }}</option>
+      {{/select}}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{ localize "CompendiumTools.module.mediaUrl" }}</label>
+    <div class="form-fields">
+      <input type="url" name="media-{{ index }}-url" value="{{ media.url }}" data-dtype="String" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{ localize "CompendiumTools.module.mediaLoop" }}</label>
+    <div class="form-fields">
+      <input type="checkbox" name="media-{{ index }}-loop" value="0" data-dtype="Boolean" {{ checked media.loop }} />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{ localize "CompendiumTools.module.mediaThumbnail" }}</label>
+    <div class="form-fields">
+      <input type="url" name="media-{{ index }}-thumbnail" value="{{ media.thumbnail }}" data-dtype="String" />
+    </div>
+  </div>
+</div>
