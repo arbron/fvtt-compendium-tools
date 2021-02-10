@@ -1,8 +1,8 @@
 <div class="form-entry">
   <div class="form-group">
     <div class="form-fields">
-      <input type="text" name="script-{{ index }}-path" value="{{ script.path }}" data-dtype="String" />
-      <select name="script-{{ index }}-type" data-dtype="String">
+      <input type="text" name="combinedScripts[{{ index }}].path" value="{{ script.path }}" data-dtype="String" />
+      <select name="combinedScripts[{{ index }}].type" data-dtype="String">
       {{#select script.type}}
         <option value="traditional">{{ localize "CompendiumTools.module.scriptTraditional" }}</option>
         <option value="module">{{ localize "CompendiumTools.module.scriptModule" }}</option>

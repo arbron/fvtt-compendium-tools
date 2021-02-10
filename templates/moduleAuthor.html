@@ -2,21 +2,21 @@
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.authorName" }}</label>
     <div class="form-fields">
-      <input type="text" name="author-{{ index }}-name" value="{{ author.name }}" data-dtype="String" />
+      <input type="text" name="authors[{{ index }}].name" value="{{ author.name }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.authorEmail" }}</label>
     <div class="form-fields">
-      <input type="email" name="author-{{ index }}-email" value="{{ author.email }}" data-dtype="String" />
+      <input type="email" name="authors[{{ index }}].email" value="{{ author.email }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.authorUrl" }}</label>
     <div class="form-fields">
-      <input type="url" name="author-{{ index }}-url" value="{{ author.url }}" data-dtype="String" />
+      <input type="text" name="authors[{{ index }}].url" value="{{ author.url }}" data-dtype="String" />
     </div>
   </div>
 
@@ -24,13 +24,13 @@
     <label>{{ localize "CompendiumTools.module.authorSocialMedia" }}</label>
     <div class="form-fields">
       <label class="grid-label"><i class="fab fa-discord"></i></label>
-      <input type="text" name="author-{{ index }}-discord" value="{{ author.discord }}" data-dtype="String" />
+      <input type="text" name="authors[{{ index }}].discord" value="{{ author.discord }}" data-dtype="String" />
       <label class="grid-label"><i class="fab fa-twitter"></i></label>
-      <input type="text" name="author-{{ index }}-twitter" value="{{ author.twitter }}" data-dtype="String" />
+      <input type="text" name="authors[{{ index }}].twitter" value="{{ author.twitter }}" data-dtype="String" />
       <label class="grid-label"><i class="fab fa-patreon"></i></label>
-      <input type="text" name="author-{{ index }}-patreon" value="{{ author.patreon }}" data-dtype="String" />
+      <input type="text" name="authors[{{ index }}].patreon" value="{{ author.patreon }}" data-dtype="String" />
       <label class="grid-label"><i class="fab fa-reddit-alien"></i></label>
-      <input type="text" name="author-{{ index }}-reddit" value="{{ author.reddit }}" data-dtype="String" />
+      <input type="text" name="authors[{{ index }}].reddit" value="{{ author.reddit }}" data-dtype="String" />
     </div>
   </div>
 </div>

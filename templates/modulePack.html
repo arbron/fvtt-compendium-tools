@@ -1,10 +1,10 @@
 <div class="form-entry">
   <div class="form-group">
     <div class="form-fields">
-      <input type="text" name="pack-{{ index }}-name" value="{{ pack.name }}" data-dtype="String" />
-      <input type="text" name="pack-{{ index }}-label" value="{{ pack.label }}" data-dtype="String" />
-      <input type="text" name="pack-{{ index }}-path" value="{{ pack.path }}" data-dtype="String" />
-      <select name="pack-{{ index }}-entity" data-dtype="String">
+      <input type="text" name="packs[{{ index }}].name" value="{{ pack.name }}" data-dtype="String" />
+      <input type="text" name="packs[{{ index }}].label" value="{{ pack.label }}" data-dtype="String" />
+      <input type="text" name="packs[{{ index }}].path" value="{{ pack.path }}" data-dtype="String" />
+      <select name="packs[{{ index }}].entity" data-dtype="String">
       {{#select pack.entity}}
         <option value="Actor">Actor</option>
         <option value="Item">Item</option>
@@ -15,7 +15,7 @@
         <option value="Playlist">Playlist</option>
       {{/select}}
       </select>
-      <input type="text" name="pack-{{ index }}-system" value="{{ pack.system }}" data-dtype="String" />
+      <input type="text" name="packs[{{ index }}].system" value="{{ pack.system }}" data-dtype="String" />
     </div>
   </div>
 </div>

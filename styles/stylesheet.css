@@ -36,6 +36,9 @@ input[type="email"]:disabled {
   font-size: 2em;
 }
 
+.ct-module-configuration .hidden {
+  display: none !important;
+}
 .ct-module-configuration .form-header {
   margin-bottom: 5px;
   border-top: 1px solid #b5b3a4;

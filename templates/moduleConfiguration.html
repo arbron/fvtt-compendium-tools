@@ -46,12 +46,44 @@
       </label>
       <label class="checkbox">
         {{ localize "CompendiumTools.module.deprecated" }}
-        <input type="checkbox" name="deprecated" value="0" data-dtype="Boolean" {{ checked module.deprecated }} />
+        <input type="checkbox" name="isDeprecated" value="0" data-dtype="Boolean" {{ checked module.isDeprecated }} />
       </label>
     </div>
   </div>
 
-    <!-- coreVersion, reason, alternatives (name, manifest) -->
+
+  <!-- Deprecation -->
+  <div class="deprecation-section{{#unless module.isDeprecated}} hidden{{/unless}}">
+    <header class="form-header">
+      <h3><i class="fas fa-hand-paper"></i> {{ localize "CompendiumTools.module.headerDeprecation" }}</h3>
+    </header>
+  
+    <div class="form-group">
+      <label>{{ localize "CompendiumTools.module.deprecationCoreVersion" }}</label>
+      <div class="form-fields">
+        <input type="text" name="deprecated.coreVersion" value="{{ module.deprecated.coreVersion }}" data-dtype="String" />
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label>{{ localize "CompendiumTools.module.deprecationReason" }}</label>
+      <div class="form-fields">
+        <textarea name="deprecated.reason">{{ module.deprecated.reason }}</textarea>
+      </div>
+    </div>
+  
+    <div class="form-list">
+      <label>{{ localize "CompendiumTools.module.deprecationAlternatives" }}</label>
+      <div class="form-group">
+        <label>{{ localize "CompendiumTools.module.name" }}</label>
+        <label>{{ localize "CompendiumTools.module.manifest" }}</label>
+      </div>
+  
+      {{#each module.deprecated.alternatives as |alternative| }}
+        {{> moduleAlternative alternative=alternative index=@index }}
+      {{/each}}
+    </div>
+  </div>
 
 
   <!-- Versions -->
@@ -106,49 +138,49 @@
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.url" }}</label>
     <div class="form-fields">
-      <input type="url" name="url" value="{{ module.url }}" data-dtype="String" />
+      <input type="text" name="url" value="{{ module.url }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.manifest" }}</label>
     <div class="form-fields">
-      <input type="url" name="manifest" value="{{ module.manifest }}" data-dtype="String" />
+      <input type="text" name="manifest" value="{{ module.manifest }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.download" }}</label>
     <div class="form-fields">
-      <input type="url" name="download" value="{{ module.download }}" data-dtype="String" />
+      <input type="text" name="download" value="{{ module.download }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.license" }}</label>
     <div class="form-fields">
-      <input type="url" name="license" value="{{ module.license }}" data-dtype="String" />
+      <input type="text" name="license" value="{{ module.license }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.readme" }}</label>
     <div class="form-fields">
-      <input type="url" name="readme" value="{{ module.readme }}" data-dtype="String" />
+      <input type="text" name="readme" value="{{ module.readme }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.changelog" }}</label>
     <div class="form-fields">
-      <input type="url" name="changelog" value="{{ module.changelog }}" data-dtype="String" />
+      <input type="text" name="changelog" value="{{ module.changelog }}" data-dtype="String" />
     </div>
   </div>
 
   <div class="form-group">
     <label>{{ localize "CompendiumTools.module.bugs" }}</label>
     <div class="form-fields">
-      <input type="url" name="bugs" value="{{ module.bugs }}" data-dtype="String" />
+      <input type="text" name="bugs" value="{{ module.bugs }}" data-dtype="String" />
     </div>
   </div>
 
@@ -279,4 +311,11 @@
       {{> moduleInclude path=path index=@index }}
     {{/each}}
   </div>
+
+  {{#if editable }}
+  <!-- Form Submission -->
+  <button type="submit" name="submit">
+      <i class="far fa-save"></i> {{localize "Save Changes"}}
+  </button>
+  {{/if}}
 </form>

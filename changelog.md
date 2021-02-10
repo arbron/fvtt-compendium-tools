@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.2.1
+ - Add deprecation description to module manifests
+
 # 0.2.0
  - Add tool to view module manifests
 

@@ -28,8 +28,9 @@ export class ModuleConfiguration extends FormApplication {
 
   /** @override */
   getData(options) {
-    const data = game.modules.get(this.moduleName).data;
+    const data = Object.assign({}, game.modules.get(this.moduleName).data);
 
+    // Join scripts into single array split by type
     let traditionalScripts = data.scripts.map(script => {
       return { path: script, type: 'traditional' };
     });
@@ -38,11 +39,14 @@ export class ModuleConfiguration extends FormApplication {
     });
     data.combinedScripts = traditionalScripts.concat(moduleScripts);
 
+    data.isDeprecated = data.deprecated !== undefined;
+
     return { module: data };
   }
 }
 
 export function prepareModuleConfigurationTemplates() {
+  registerPartial('moduleAlternative', 'moduleAlternative.html');
   registerPartial('moduleAuthor', 'moduleAuthor.html');
   registerPartial('moduleConflict', 'moduleConflict.html');
   registerPartial('moduleDependency', 'moduleDependency.html');
@@ -53,72 +57,3 @@ export function prepareModuleConfigurationTemplates() {
   registerPartial('moduleScript', 'moduleScript.html');
   registerPartial('moduleStyle', 'moduleStyle.html');
 }
-
-/*
- * Required Manifest Attributes
- *  name
- *  title
- *  description
- *  version
- *  author
- *  minimumCoreVersion
- * 
- * Optional Manifest Attributes
- *  compatibleCoreVersion
- *  scripts
- *  esmodules
- *  styles
- *  packs
- *    name
- *    label
- *    system
- *    path
- *    entity
- *  dependencies
- *    name
- *    type
- *    manifest
- *  languages
- *    lang
- *    name
- *    path
- *  system
- *  authors
- *    name
- *    email
- *    url
- *  socket
- *  url
- *  manifest
- *  download
- *  license
- *  readme
- *  bugs
- *  changelog
- *
- * Manifest+ Attributes
- *  authors+
- *    discord
- *    twitter
- *    patreon
- *    reddit
- *  manifestPlusVersion (auto)
- *  media
- *    type - cover, icon, screenshot, video
- *    url
- *    loop (video only)
- *    thumbnail (video only)
- *  library
- *  includes
- *  deprecated
- *    coreVersion
- *    reason
- *    alternatives
- *      name
- *      manifest
- *  conflicts
- *    name
- *    type
- *    versionMin
- *    versionMax
- */
