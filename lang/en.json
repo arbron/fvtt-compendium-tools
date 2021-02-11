@@ -1,7 +1,12 @@
 {
   "CompendiumTools.title": "Arbron's Compendium Tools",
 
-  "CompendiumTools.bypassEditLock.name": "Bypass Edit Lock",
+  "CompendiumTools.allowModuleEditing.name": "Allow Module Editing",
+  "CompendiumTools.allowModuleEditing.hint": "Which modules should the GM be able to edit.",
+  "CompendiumTools.allowModuleEditing.all": "All Modules",
+  "CompendiumTools.allowModuleEditing.local": "Only Local Modules (without a manifest .json)",
+  "CompendiumTools.allowModuleEditing.none": "None",
+  "CompendiumTools.bypassEditLock.name": "Bypass Compendium Edit Lock",
   "CompendiumTools.bypassEditLock.hint": "Allows for editing Compendiums even when they are locked or belong to a module. Warning: Changes made to modules you do not control will be overwritten when the module is updated.",
 
   "CompendiumTools.replace.title": "Replace Entry",

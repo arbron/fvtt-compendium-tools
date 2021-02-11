@@ -1,5 +1,7 @@
 import constants from './shared/constants.js';
+import { parseFormData } from './shared/forms.js';
 import { registerPartial } from './shared/templates.js';
+import { CTSettings } from './settings.js';
 
 
 export class ModuleConfiguration extends FormApplication {
@@ -23,7 +25,8 @@ export class ModuleConfiguration extends FormApplication {
 
   /** @override */
   get isEditable() {
-    return false;
+    const module = game.modules.get(this.moduleName).data;
+    return (game.user.isGM && CTSettings.allowModuleEditing(/* isLocal */ module.manifest == ''));
   }
 
   /** @override */
@@ -41,7 +44,27 @@ export class ModuleConfiguration extends FormApplication {
 
     data.isDeprecated = data.deprecated !== undefined;
 
-    return { module: data };
+    return { editable: this.isEditable, module: data };
+  }
+
+  _updateObject(event, data) {
+    let parsedData = parseFormData(data);
+
+    // Split scripts into separate arrays
+    if (parsedData.combinedScripts) {
+      parsedData.scripts = [];
+      parsedData.esmodules = [];
+      for (let script of parsedData.combinedScripts) {
+        if (script.type == 'traditional') {
+          parsedData.scripts.push(script.path);
+        } else if (script.type == 'module') {
+          parsedData.esmodules.push(script.path);
+        }
+      }
+      delete parsedData.combinedScripts;
+    }
+
+    // TODO: Update module.json
   }
 }
 

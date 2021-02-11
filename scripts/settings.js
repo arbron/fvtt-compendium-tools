@@ -4,12 +4,12 @@ import { log } from './shared/messages.js';
 const curryRegister = (module) => (key, data) => game.settings.register(module, key, data);
 const register = curryRegister(constants.moduleName);
 
+const ALLOW_MODULE_EDITING = 'allow-module-editing';
 const BYPASS_EDIT_LOCK = 'bypass-edit-lock';
 
 class Settings {
   init() {
     log('Registering settings');
-    const localize = game.i18n.localize;
     register(BYPASS_EDIT_LOCK, {
       name: game.i18n.localize('CompendiumTools.bypassEditLock.name'),
       hint: game.i18n.localize('CompendiumTools.bypassEditLock.hint'),
@@ -18,10 +18,34 @@ class Settings {
       default: false,
       type: Boolean
     });
+    register(ALLOW_MODULE_EDITING, {
+      name: game.i18n.localize('CompendiumTools.allowModuleEditing.name'),
+      hint: game.i18n.localize('CompendiumTools.allowModuleEditing.hint'),
+      scope: 'world',
+      config: true,
+      choices: {
+        'all': game.i18n.localize('CompendiumTools.allowModuleEditing.all'),
+        'local': game.i18n.localize('CompendiumTools.allowModuleEditing.local'),
+        'none': game.i18n.localize('CompendiumTools.allowModuleEditing.none'),
+      },
+      default: 'local',
+      type: String
+    });
   }
 
   static _get(name) {
     return game.settings.get(constants.moduleName, name);
+  }
+
+  allowModuleEditing(isLocal = false) {
+    switch (Settings._get(ALLOW_MODULE_EDITING)) {
+      case 'all':
+        return true;
+      case 'local':
+        return isLocal;
+      case 'none':
+        return false;
+    }
   }
 
   get bypassEditLock() {
