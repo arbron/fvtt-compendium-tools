@@ -25,6 +25,8 @@ export class ModuleConfiguration extends FormApplication {
 
   /** @override */
   get isEditable() {
+    if (!constants._updateModuleFeatures) return false;
+
     const module = game.modules.get(this.moduleName).data;
     return (game.user.isGM && CTSettings.allowModuleEditing(/* isLocal */ module.manifest == ''));
   }

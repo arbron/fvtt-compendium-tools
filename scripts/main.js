@@ -1,5 +1,6 @@
 import constants from './shared/constants.js';
 import { log } from './shared/messages.js';
+import { fixRollFromCompendiumConflict } from './compatibility/rollFromCompendium.js';
 import { ModuleConfiguration, prepareModuleConfigurationTemplates } from './ModuleConfiguration.js';
 import { patchCompendiumCanModify, patchCompendiumMenus, patchModuleMenus } from './patches.js';
 import { ReplaceEntry } from './ReplaceEntry.js';
@@ -13,6 +14,8 @@ Hooks.on('setup', () => {
   patchCompendiumCanModify();
   patchCompendiumMenus();
   patchModuleMenus();
+
+  fixRollFromCompendiumConflict();
 
   prepareModuleConfigurationTemplates();
 });

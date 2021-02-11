@@ -35,13 +35,20 @@ export function patchCompendiumMenus() {
       replacement: '];' }
   ]);
   if (!PatchedClass) return;
+  PatchedClass = Monkey.patchMethod(PatchedClass, 'activateListeners', [
+    { line: 12,
+      original: 'this._contextMenu(html);',
+      replacement: 'this._ctContextMenu(html);'
+    }
+  ]);
 
   Compendium.prototype._getCompendiumContextOptions = PatchedClass.prototype._contextMenu;
-  Monkey.replaceMethod(Compendium, '_contextMenu', function(html) {
+  Compendium.prototype.activateListeners = PatchedClass.prototype.activateListeners;
+  Compendium.prototype._ctContextMenu = function(html) {
     const contextOptions = this._getCompendiumContextOptions();
-    Hooks.call('ctGetCompendiumItemContext', this, html, contextOptions);
+    Hooks.callAll('ctGetCompendiumItemContext', this, html, contextOptions);
     if (contextOptions) new ContextMenu(html, '.directory-item', contextOptions);
-  });
+  };
 }
 
 
@@ -63,7 +70,7 @@ export function patchModuleMenus() {
   ModuleManagement.prototype.activateListeners = PatchedClass.prototype.activateListeners;
   ModuleManagement.prototype._contextMenu = function(html) {
     const contextOptions = [];
-    Hooks.call('ctGetModuleManagementItemContext', html, contextOptions);
+    Hooks.callAll('ctGetModuleManagementItemContext', html, contextOptions);
     if (contextOptions) new ContextMenu(html, '.package', contextOptions);
   }
 }

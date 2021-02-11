@@ -5,6 +5,8 @@ let constants = {
 
   replaceEntryWidth: 400,
   replaceEntryHeight: 300,
+
+  _updateModuleFeatures: false,
 };
 constants.templateRoot = `${constants.modulePath}/templates`;
 
