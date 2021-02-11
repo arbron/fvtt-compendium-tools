@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.2.2
+ - Fix compatibility issue with the [Roll From Compendium](https://github.com/itamarcu/roll-from-compendium) module
+
 # 0.2.1
  - Add deprecation description to module manifests
 
