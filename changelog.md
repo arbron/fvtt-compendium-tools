@@ -1,7 +1,7 @@
 # Changelog
 
 # 0.2.3
- - Opt-in to Bug Reporter
+ - Opt-in to [Bug Reporter](https://github.com/League-of-Foundry-Developers/bug-reporter)
 
 # 0.2.2
  - Fix compatibility issue with the [Roll From Compendium](https://github.com/itamarcu/roll-from-compendium) module (thanks DivertedCircle#9718)
