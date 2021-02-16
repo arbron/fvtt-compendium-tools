@@ -1,7 +1,10 @@
 # Changelog
 
+# 0.2.3
+ - Opt-in to Bug Reporter
+
 # 0.2.2
- - Fix compatibility issue with the [Roll From Compendium](https://github.com/itamarcu/roll-from-compendium) module
+ - Fix compatibility issue with the [Roll From Compendium](https://github.com/itamarcu/roll-from-compendium) module (thanks DivertedCircle#9718)
 
 # 0.2.1
  - Add deprecation description to module manifests
