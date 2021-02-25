@@ -11,6 +11,8 @@
   "CompendiumTools.editUserLevel.name": "User Level Required for Edits",
   "CompendiumTools.editUserLevel.hint": "Minimum user level required to edit the contents of a Compendium. Lowering this does not allow users below GM level to modify Compendiums, only their contents.",
 
+  "CompendiumTools.noGMUser": "Compendiums can only be updated by players when a GM user is active.",
+
   "CompendiumTools.replace.title": "Replace Entry",
   "CompendiumTools.replace.dropArea": "Drop Replacement Here",
   "CompendiumTools.replace.typeError": "You are attempting to replace this item with a type that cannot be stored in this Compendium.",

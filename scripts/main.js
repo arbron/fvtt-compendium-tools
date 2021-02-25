@@ -12,6 +12,7 @@ Hooks.once('init', () => {
 });
 
 Hooks.on('setup', () => {
+  patches.addCompendiumDispatchRemoteUpdate();
   patches.patchCompendiumCreateEntity();
   patches.patchCompendiumUpdateEntity();
   patches.patchCompendiumDeleteEntity();

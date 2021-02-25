@@ -1,8 +1,31 @@
 import constants from './shared/constants.js';
-import { log } from './shared/messages.js';
+import { log, uiError } from './shared/messages.js';
 import { Monkey } from './shared/Monkey.js';
 import { CTSettings } from './settings.js';
 
+
+/**
+ * Add method to Compendium for sending out updates over socket.
+ */
+export function addCompendiumDispatchRemoteUpdate() {
+  log('Adding Compendium._dispatchRemoteUpdate');
+
+  Compendium.prototype._dispatchRemoteUpdate = function(operation, data, options={}) {
+    if (game.users.filter(user => user.active && user.isGM).length == 0) {
+      return uiError(game.i18n.localize('CompendiumTools.noGMUser'), /* toConsole */ false);
+    }
+
+    game.socket.emit(constants.socket, {
+      operation: operation,
+      user: game.user.id,
+      content: {
+        type: this.collection,
+        data: data,
+        options: options
+      }
+    });
+  }
+}
 
 /**
  * Monkey patch Compendium.createEntity method to dispatch creation over socket
@@ -15,18 +38,9 @@ export function patchCompendiumCreateEntity() {
   PatchedClass = Monkey.patchMethod(PatchedClass, 'createEntity', [
     { line: 3,
       original: '',
-      replacement: `if (!game.user.isGM) {
-        game.socket.emit('${constants.socket}', {
-          operation: 'createEntity',
-          user: game.user.id,
-          content: {
-            type: this.collection,
-            data: data,
-            options: options
-          }
-        });
-        return;
-      }` }
+      replacement: `
+        if (!game.user.isGM) return this._dispatchRemoteUpdate('createEntity', data, options);
+      ` }
   ]);
   if (!PatchedClass) return;
   Compendium.prototype.createEntity = PatchedClass.prototype.createEntity;
@@ -44,18 +58,9 @@ export function patchCompendiumUpdateEntity() {
   PatchedClass = Monkey.patchMethod(PatchedClass, 'updateEntity', [
     { line: 17,
       original: '',
-      replacement: `if (!game.user.isGM) {
-        game.socket.emit('${constants.socket}', {
-          operation: 'updateEntity',
-          user: game.user.id,
-          content: {
-            type: this.collection,
-            data: updates,
-            options: options
-          }
-        });
-        return;
-      }` }
+      replacement: `
+        if (!game.user.isGM) return this._dispatchRemoteUpdate('updateEntity', updates, options);
+      ` }
   ]);
   if (!PatchedClass) return;
   Compendium.prototype.updateEntity = PatchedClass.prototype.updateEntity;
@@ -74,18 +79,8 @@ export function patchCompendiumDeleteEntity() {
     { line: 2,
       original: 'const ids = id instanceof Array ? id : [id];',
       replacement: `const ids = id instanceof Array ? id : [id];
-      if (!game.user.isGM) {
-        game.socket.emit('${constants.socket}', {
-          operation: 'deleteEntity',
-          user: game.user.id,
-          content: {
-            type: this.collection,
-            data: ids,
-            options: options
-          }
-        });
-        return;
-      }` }
+        if (!game.user.isGM) return this._dispatchRemoteUpdate('deleteEntity', ids, options);
+      ` }
   ]);
   if (!PatchedClass) return;
   Compendium.prototype.deleteEntity = PatchedClass.prototype.deleteEntity;
