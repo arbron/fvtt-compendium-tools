@@ -1,6 +1,96 @@
+import constants from './shared/constants.js';
 import { log } from './shared/messages.js';
 import { Monkey } from './shared/Monkey.js';
 import { CTSettings } from './settings.js';
+
+
+/**
+ * Monkey patch Compendium.createEntity method to dispatch creation over socket
+ * if user is not GM user.
+ */
+export function patchCompendiumCreateEntity() {
+  log('Patching Compendium.createEntity');
+
+  let PatchedClass = Compendium;
+  PatchedClass = Monkey.patchMethod(PatchedClass, 'createEntity', [
+    { line: 3,
+      original: '',
+      replacement: `if (!game.user.isGM) {
+        game.socket.emit('${constants.socket}', {
+          operation: 'createEntity',
+          user: game.user.id,
+          content: {
+            type: this.collection,
+            data: data,
+            options: options
+          }
+        });
+        return;
+      }` }
+  ]);
+  if (!PatchedClass) return;
+  Compendium.prototype.createEntity = PatchedClass.prototype.createEntity;
+}
+
+
+/**
+ * Monkey patch Compendium.updateEntity method to dispatch update over socket
+ * if user if not GM user.
+ */
+export function patchCompendiumUpdateEntity() {
+  log('Patching Compendium.updateEntity');
+
+  let PatchedClass = Compendium;
+  PatchedClass = Monkey.patchMethod(PatchedClass, 'updateEntity', [
+    { line: 17,
+      original: '',
+      replacement: `if (!game.user.isGM) {
+        game.socket.emit('${constants.socket}', {
+          operation: 'updateEntity',
+          user: game.user.id,
+          content: {
+            type: this.collection,
+            data: updates,
+            options: options
+          }
+        });
+        return;
+      }` }
+  ]);
+  if (!PatchedClass) return;
+  Compendium.prototype.updateEntity = PatchedClass.prototype.updateEntity;
+}
+
+
+/**
+ * Monkey patch Compendium.deleteEntity method to dispatch deletion over socket
+ * if user if not GM user.
+ */
+export function patchCompendiumDeleteEntity() {
+  log('Patching Compendium.deleteEntity');
+
+  let PatchedClass = Compendium;
+  PatchedClass = Monkey.patchMethod(PatchedClass, 'deleteEntity', [
+    { line: 2,
+      original: 'const ids = id instanceof Array ? id : [id];',
+      replacement: `const ids = id instanceof Array ? id : [id];
+      if (!game.user.isGM) {
+        game.socket.emit('${constants.socket}', {
+          operation: 'deleteEntity',
+          user: game.user.id,
+          content: {
+            type: this.collection,
+            data: ids,
+            options: options
+          }
+        });
+        return;
+      }` }
+  ]);
+  if (!PatchedClass) return;
+  Compendium.prototype.deleteEntity = PatchedClass.prototype.deleteEntity;
+}
+
 
 /**
  * Monkey patch private Compendium._assertUserCanModify method to respect
@@ -10,9 +100,8 @@ export function patchCompendiumCanModify() {
   log('Patching Compendium._assertUserCanModify');
 
   Monkey.replaceMethod(Compendium, '_assertUserCanModify', function(options={}) {
-    if (CTSettings.bypassEditLock) {
-      options.requireUnlocked = false;
-    }
+    if (CTSettings.bypassEditLock) options.requireUnlocked = false;
+    options.requireGM = false; // TODO: Fix
     return Monkey.callOriginalFunction(this, '_assertUserCanModify', options);
   });
 }

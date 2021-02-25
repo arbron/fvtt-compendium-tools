@@ -2,26 +2,28 @@ import constants from './shared/constants.js';
 import { log } from './shared/messages.js';
 import { fixRollFromCompendiumConflict } from './compatibility/rollFromCompendium.js';
 import { ModuleConfiguration, prepareModuleConfigurationTemplates } from './ModuleConfiguration.js';
-import { patchCompendiumCanModify, patchCompendiumMenus, patchModuleMenus } from './patches.js';
+import * as patches from './patches.js';
 import { ReplaceEntry } from './ReplaceEntry.js';
 import { CTSettings } from './settings.js';
+import { setupSocketListeners } from './socket.js';
 
 Hooks.once('init', () => {
   CTSettings.init();
 });
 
 Hooks.on('setup', () => {
-  patchCompendiumCanModify();
-  patchCompendiumMenus();
-  patchModuleMenus();
+  patches.patchCompendiumCreateEntity();
+  patches.patchCompendiumUpdateEntity();
+  patches.patchCompendiumDeleteEntity();
+  patches.patchCompendiumCanModify();
+  patches.patchCompendiumMenus();
+  patches.patchModuleMenus();
 
   fixRollFromCompendiumConflict();
 
   prepareModuleConfigurationTemplates();
-});
 
-Hooks.on('ready', () => {
-  
+  setupSocketListeners();
 });
 
 Hooks.on('ctGetCompendiumItemContext', (compendium, html, menuOptions) => {
