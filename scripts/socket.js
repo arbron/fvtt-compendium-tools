@@ -38,6 +38,10 @@ async function renderCompendium(data) {
 }
 
 async function executeRemoteOperation(action, data) {
+  // Only run the operation on the first GM user
+  const gmUsers = game.users.filter(user => user.active && user.isGM);
+  if (gmUsers[0].id != game.user.id) return;
+
   log(`Remote ${action} entity request received`);
 
   let message = duplicate(data);
