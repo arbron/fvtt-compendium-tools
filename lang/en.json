@@ -8,6 +8,8 @@
   "CompendiumTools.allowModuleEditing.none": "None",
   "CompendiumTools.bypassEditLock.name": "Bypass Compendium Edit Lock",
   "CompendiumTools.bypassEditLock.hint": "Allows for editing Compendiums even when they are locked or belong to a module. Warning: Changes made to modules you do not control will be overwritten when the module is updated.",
+  "CompendiumTools.editUserLevel.name": "User Level Required for Edits",
+  "CompendiumTools.editUserLevel.hint": "Minimum user level required to edit the contents of a Compendium. Lowering this does not allow users below GM level to modify Compendiums, only their contents.",
 
   "CompendiumTools.replace.title": "Replace Entry",
   "CompendiumTools.replace.dropArea": "Drop Replacement Here",

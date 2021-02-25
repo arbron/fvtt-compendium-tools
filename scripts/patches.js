@@ -101,7 +101,13 @@ export function patchCompendiumCanModify() {
 
   Monkey.replaceMethod(Compendium, '_assertUserCanModify', function(options={}) {
     if (CTSettings.bypassEditLock) options.requireUnlocked = false;
-    options.requireGM = false; // TODO: Fix
+    if (game.user.role < CTSettings.editUserLevel) {
+      let err = new Error('You do not have permission to modify this compendium pack');
+      ui.notifications.error(err.message);
+      throw err;
+    } else {
+      options.requireGM = false;
+    }
     return Monkey.callOriginalFunction(this, '_assertUserCanModify', options);
   });
 }
