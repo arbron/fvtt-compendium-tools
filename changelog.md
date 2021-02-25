@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.3.0
+ - Add compendium edit permissions to allow non-GM users to modify compendia
+
 # 0.2.3
  - Opt-in to [Bug Reporter](https://github.com/League-of-Foundry-Developers/bug-reporter)
 
