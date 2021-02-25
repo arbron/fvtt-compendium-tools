@@ -1,5 +1,11 @@
 # Changelog
 
+# 0.3.1
+ - Add Ko-fi account into manifest
+ - Update module manifest viewer to support Manifest+ version 1.1.0
+ - Add message if players attempt to update compendium when no GM user is active
+ - Fix bug causing multiple updates to be issued if multiple GM users are active
+
 # 0.3.0
  - Add compendium edit permissions to allow non-GM users to modify compendia
 
