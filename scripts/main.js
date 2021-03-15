@@ -1,5 +1,6 @@
 import constants from './shared/constants.js';
 import { log } from './shared/messages.js';
+import { fixMonksLittleDetailsConflict } from './compatibility/monksLittleDetails.js';
 import { fixRollFromCompendiumConflict } from './compatibility/rollFromCompendium.js';
 import { ModuleConfiguration, prepareModuleConfigurationTemplates } from './ModuleConfiguration.js';
 import * as patches from './patches.js';
@@ -19,6 +20,7 @@ Hooks.on('setup', () => {
   patches.patchCompendiumCanModify();
   patches.patchModuleMenus();
 
+  fixMonksLittleDetailsConflict();
   fixRollFromCompendiumConflict();
 
   prepareModuleConfigurationTemplates();

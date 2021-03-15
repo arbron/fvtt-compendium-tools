@@ -1,5 +1,4 @@
 import { log } from '../shared/messages.js';
-import { Monkey } from '../shared/Monkey.js';
 
 export function fixRollFromCompendiumConflict() {
   const module = game.modules.get('roll-from-compendium');
@@ -12,6 +11,8 @@ export function fixRollFromCompendiumConflict() {
 function applyFix(module) {
   // Add new context menu item
   Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
+    if (entryOptions.find(e => e.name === "Roll")) return;
+
     entryOptions.unshift({
       name: 'Roll',
       icon: '<i class="fas fa-dice-d20"></i>',

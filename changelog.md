@@ -2,6 +2,7 @@
 
 # 0.4.0
  - Switch to external library for adding context menus to resolve compatibility issues with other modules that also modify compendium context menus
+ - Fix compatibility issue with [Monk's Little Details](https://github.com/ironmonk88/monks-little-details) module (thanks DivertedCircle)
 
 # 0.3.1
  - Add Ko-fi account into manifest
