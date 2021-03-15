@@ -1,5 +1,5 @@
 import constants from './shared/constants.js';
-import { log } from './shared/messages.js';
+import { log, uiError } from './shared/messages.js';
 import { fixMonksLittleDetailsConflict } from './compatibility/monksLittleDetails.js';
 import { fixRollFromCompendiumConflict } from './compatibility/rollFromCompendium.js';
 import { ModuleConfiguration, prepareModuleConfigurationTemplates } from './ModuleConfiguration.js';
@@ -12,7 +12,7 @@ Hooks.once('init', () => {
   CTSettings.init();
 });
 
-Hooks.on('setup', () => {
+Hooks.once('setup', () => {
   patches.addCompendiumDispatchRemoteUpdate();
   patches.patchCompendiumCreateEntity();
   patches.patchCompendiumUpdateEntity();
@@ -26,6 +26,37 @@ Hooks.on('setup', () => {
   prepareModuleConfigurationTemplates();
 
   setupSocketListeners();
+});
+
+Hooks.once('ready', () => {
+  const contextMenuLibrary = game.modules.get('arbron-context-menus');
+  if (game.user.isGM && !contextMenuLibrary || !contextMenuLibrary.active) {
+    const present = contextMenuLibrary ? 'enabled' : 'present';
+    uiError(`Context Menu Library not ${present}, Replace Entry will not work.`);
+
+    const DONT_REMIND_AGAIN_KEY = 'context-menus-dont-remind-again';
+    game.settings.register(constants.moduleName, DONT_REMIND_AGAIN_KEY, { name: '', default: false, type: Boolean, scope: 'world', config: false });
+    if (!game.settings.get(constants.moduleName, DONT_REMIND_AGAIN_KEY)) {
+      const instruction = contextMenuLibrary ? 'You can enable it from the "Module Management" screen in this world.' : 'You can install it from the "Add-on Modules" tab in the Foundry VTT Setup and then enable it from the "Module Management" screen in this world.';
+      const message = `
+        <p>Compendium Tools depends on <em>Arbron's Context Menu Library</em>, which is not ${present}.</p>
+        <small><p>${instruction}</p></small>
+      `;
+
+      new Dialog({
+        title: 'Context Menu Library Missing',
+        content: message,
+        buttons: {
+          ok: { icon: '<i class="fas fa-check"></i>', label: 'Understood' },
+          dont_remind: {
+            icon: '<i class="fas fa-times"></i>',
+            label: "Don't Remind Me Again",
+            callback: () => game.settings.set(constants.moduleName, DONT_REMIND_AGAIN_KEY, true)
+          }
+        }
+      }).render(true);
+    }
+  }
 });
 
 Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {

@@ -41,7 +41,7 @@
   "dependencies": [
     {
       "name": "arbron-context-menus",
-      "manifest": "https://github.com/arbron/fvtt-context-menu-library/releases/download/0.1.0/module.json"
+      "manifest": "https://github.com/arbron/fvtt-context-menu-library/releases/latest/download/module.json"
     }
   ]
 }

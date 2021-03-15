@@ -14,10 +14,10 @@ export function error(message) {
   console.error(formatMessage(message));
 }
 
-export function uiError(localizationKey, toConsole=true) {
+export function uiError(localizationKey, toConsole=true, permanent=false) {
   let message = game.i18n.localize(localizationKey);
   if (toConsole) error(message);
-  ui.notifications.error(message);
+  ui.notifications.error(message, {permanent: permanent});
 }
 
 export function makeError(message) {
