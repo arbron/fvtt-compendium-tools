@@ -11,8 +11,8 @@ export function fixRollFromCompendiumConflict() {
 
 function applyFix(module) {
   // Add new context menu item
-  Hooks.on('ctGetCompendiumItemContext', (compendium, html, menuOptions) => {
-    menuOptions.unshift({
+  Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
+    entryOptions.unshift({
       name: 'Roll',
       icon: '<i class="fas fa-dice-d20"></i>',
       callback: li => {

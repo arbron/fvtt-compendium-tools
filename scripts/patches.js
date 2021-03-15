@@ -109,40 +109,6 @@ export function patchCompendiumCanModify() {
 
 
 /**
- * Monkey patch private Compendium._contextMenu method to call a hook before
- * the context menu is generated.
- */
-export function patchCompendiumMenus() {
-  log('Patching Compendium._context_menu');
-
-  let PatchedClass = Compendium;
-  PatchedClass = Monkey.patchMethod(PatchedClass, '_contextMenu', [
-    { line: 1,
-      original:  'new ContextMenu(html, ".directory-item", [',
-      replacement: 'return [' },
-    { line: 25,
-      original: ']);',
-      replacement: '];' }
-  ]);
-  if (!PatchedClass) return;
-  PatchedClass = Monkey.patchMethod(PatchedClass, 'activateListeners', [
-    { line: 12,
-      original: 'this._contextMenu(html);',
-      replacement: 'this._ctContextMenu(html);'
-    }
-  ]);
-
-  Compendium.prototype._getCompendiumContextOptions = PatchedClass.prototype._contextMenu;
-  Compendium.prototype.activateListeners = PatchedClass.prototype.activateListeners;
-  Compendium.prototype._ctContextMenu = function(html) {
-    const contextOptions = this._getCompendiumContextOptions();
-    Hooks.callAll('ctGetCompendiumItemContext', this, html, contextOptions);
-    if (contextOptions) new ContextMenu(html, '.directory-item', contextOptions);
-  };
-}
-
-
-/**
  * Monkey patch ModuleMangement.activateListeners to add the option of displaying
  * a context menu for each module.
  */

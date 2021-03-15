@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.4.0
+ - Switch to external library for adding context menus to resolve compatibility issues with other modules that also modify compendium context menus
+
 # 0.3.1
  - Add Ko-fi account into manifest
  - Update module manifest viewer to support Manifest+ version 1.1.0

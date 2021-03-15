@@ -17,7 +17,6 @@ Hooks.on('setup', () => {
   patches.patchCompendiumUpdateEntity();
   patches.patchCompendiumDeleteEntity();
   patches.patchCompendiumCanModify();
-  patches.patchCompendiumMenus();
   patches.patchModuleMenus();
 
   fixRollFromCompendiumConflict();
@@ -27,9 +26,9 @@ Hooks.on('setup', () => {
   setupSocketListeners();
 });
 
-Hooks.on('ctGetCompendiumItemContext', (compendium, html, menuOptions) => {
-  let insertIndex = menuOptions.findIndex(element => element.name == 'COMPENDIUM.ImportEntry');
-  menuOptions.splice(insertIndex + 1, 0, {
+Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
+  let insertIndex = entryOptions.findIndex(element => element.name == 'COMPENDIUM.ImportEntry');
+  entryOptions.splice(insertIndex + 1, 0, {
     name: 'CompendiumTools.replace.title',
     icon: '<i class="fas fa-sign-in-alt"></i>',
     callback: li => {
@@ -37,7 +36,6 @@ Hooks.on('ctGetCompendiumItemContext', (compendium, html, menuOptions) => {
       return new ReplaceEntry(compendium, entryId).render(true);
     }
   });
-  return menuOptions;
 });
 
 Hooks.on('ctGetModuleManagementItemContext', (html, menuOptions) => {
