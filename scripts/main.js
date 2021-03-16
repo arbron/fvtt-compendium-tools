@@ -17,7 +17,7 @@ Hooks.once('setup', () => {
   patches.patchCompendiumCreateEntity();
   patches.patchCompendiumUpdateEntity();
   patches.patchCompendiumDeleteEntity();
-  patches.patchCompendiumCanModify();
+  if (!CTSettings.is080) patches.patchCompendiumCanModify();
   patches.patchModuleMenus();
 
   fixMonksLittleDetailsConflict();

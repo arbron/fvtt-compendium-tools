@@ -13,14 +13,16 @@ class Settings {
     this.is080 = !isNewerVersion("0.8.0", game.data.version);
 
     log('Registering settings');
-    register(BYPASS_EDIT_LOCK, {
-      name: game.i18n.localize('CompendiumTools.bypassEditLock.name'),
-      hint: game.i18n.localize('CompendiumTools.bypassEditLock.hint'),
-      scope: 'world',
-      config: true,
-      default: false,
-      type: Boolean
-    });
+    if (!this.is080) {
+      register(BYPASS_EDIT_LOCK, {
+        name: game.i18n.localize('CompendiumTools.bypassEditLock.name'),
+        hint: game.i18n.localize('CompendiumTools.bypassEditLock.hint'),
+        scope: 'world',
+        config: true,
+        default: false,
+        type: Boolean
+      });
+    }
     register(EDIT_USER_LEVEL, {
       name: game.i18n.localize('CompendiumTools.editUserLevel.name'),
       hint: game.i18n.localize('CompendiumTools.editUserLevel.hint'),
