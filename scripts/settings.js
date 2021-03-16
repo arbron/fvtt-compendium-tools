@@ -10,6 +10,8 @@ const EDIT_USER_LEVEL = 'edit-user-level';
 
 class Settings {
   init() {
+    this.is080 = !isNewerVersion("0.8.0", game.data.version);
+
     log('Registering settings');
     register(BYPASS_EDIT_LOCK, {
       name: game.i18n.localize('CompendiumTools.bypassEditLock.name'),

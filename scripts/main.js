@@ -65,7 +65,7 @@ Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
     name: 'CompendiumTools.replace.title',
     icon: '<i class="fas fa-sign-in-alt"></i>',
     callback: li => {
-      const entryId = li.attr('data-entry-id');
+      const entryId = CTSettings.is080 ? li.attr('data-document-id') : li.attr('data-entry-id');
       return new ReplaceEntry(compendium, entryId).render(true);
     }
   });
