@@ -101,8 +101,8 @@ export class ReplaceEntry extends Application {
       let confirmationDialog = new Dialog({
         title: game.i18n.localize('CompendiumTools.replace.subtypeMismatchTitle'),
         content: game.i18n.format('CompendiumTools.replace.subtypeMismatchWarning', {
-          originalType: originalDocument.data.type,
-          replacementType: replacementDocument.data.type
+          originalType: game.i18n.localize(CONFIG[entityType].typeLabels[originalDocument.data.type]),
+          replacementType: game.i18n.localize(CONFIG[entityType].typeLabels[replacementDocument.data.type])
         }),
         buttons: {
           replace: {
