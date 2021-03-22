@@ -2,7 +2,7 @@ import { log } from '../shared/messages.js';
 
 export function fixMonksLittleDetailsConflict() {
   const module = game.modules.get('monks-little-details');
-  if (module && module.active) {
+  if (module && module.active && isNewerVersion("1.0.17", module.data.version)) {
     log('Applying "Monk\'s Little Details" compatibility fix');
 
     Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
