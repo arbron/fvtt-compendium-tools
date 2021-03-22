@@ -8,6 +8,7 @@ import { ReplaceEntry } from './ReplaceEntry.js';
 import { CTSettings } from './settings.js';
 import { setupSocketListeners } from './socket.js';
 
+
 Hooks.once('init', () => {
   CTSettings.init();
 });
@@ -18,7 +19,11 @@ Hooks.once('setup', () => {
   patches.patchCompendiumUpdateEntity();
   patches.patchCompendiumDeleteEntity();
   if (!CTSettings.is080) patches.patchCompendiumCanModify();
-  patches.patchModuleMenus();
+
+  const contextMenuLibrary = game.modules.get('arbron-context-menus');
+  if (contextMenuLibrary && isNewerVersion("0.2.0", contextMenuLibrary.data.version)) {
+    patches.patchModuleMenus();
+  }
 
   fixMonksLittleDetailsConflict();
   fixRollFromCompendiumConflict();
@@ -59,6 +64,11 @@ Hooks.once('ready', () => {
   }
 });
 
+
+/* ----------------------------- */
+/*         Context Menus         */
+/* ----------------------------- */
+
 Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
   const canMakeChanges = () => game.user.isGM || (game.user.role >= CTSettings.editUserLevel);
 
@@ -77,8 +87,10 @@ Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
   entryOptions[deleteIndex].condition = canMakeChanges;
 });
 
-Hooks.on('ctGetModuleManagementItemContext', (html, menuOptions) => {
-  menuOptions.push({
+Hooks.on('ctGetModuleManagementItemContext', moduleManagementContextEntries);
+Hooks.on('_getModuleManagementEntryContext', moduleManagementContextEntries);
+function moduleManagementContextEntries(html, entryOptions) {
+  entryOptions.push({
     name: 'CompendiumTools.module.editModuleConfiguration',
     icon: '<i class="fas fa-edit"></i>',
     callback: li => {
@@ -87,4 +99,4 @@ Hooks.on('ctGetModuleManagementItemContext', (html, menuOptions) => {
     }
   }
   );
-});
+}
