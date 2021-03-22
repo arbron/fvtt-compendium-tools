@@ -20,7 +20,7 @@
   "changelog": "https://raw.githubusercontent.com/arbron/fvtt-compendium-tools/main/changelog.md",
   "bugs": "https://github.com/arbron/fvtt-compendium-tools/issues",
   "allowBugReporter": true,
-  "version": "0.4.1",
+  "version": "0.4.2",
   "minimumCoreVersion": "0.7.9",
   "compatibleCoreVersion": "0.8.0",
   "manifestPlusVersion": "1.1.0",

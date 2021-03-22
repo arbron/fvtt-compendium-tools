@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.4.2
+ - Update Module Management hooks to work with new version of [Context Menu Library](https://github.com/arbron/fvtt-context-menu-library)
+
 # 0.4.1
  - Add support for 0.8.0
 
