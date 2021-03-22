@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.4.1
+ - Add support for 0.8.0
+
 # 0.4.0
  - Switch to external library for adding context menus to resolve compatibility issues with other modules that also modify compendium context menus
  - Fix compatibility issue with [Monk's Little Details](https://github.com/ironmonk88/monks-little-details) module (thanks DivertedCircle)
