@@ -54,12 +54,15 @@ async function executeRemoteOperation(action, data) {
 
       const documentClass = CONFIG[data.type].documentClass;
       await documentClass.create(data.data, data.context);
+      compendiumName = data.context.pack;
 
     } else {
 
       const doc = await fromUuid(data.context.uuid);
+      compendiumName = doc.pack;
       let newContext = duplicate(data.context);
       newContext.uuid = undefined;
+
       if (action === 'update') {
         await doc.update(data.data, newContext);
       } else if (action === 'delete') {
@@ -69,7 +72,6 @@ async function executeRemoteOperation(action, data) {
       }
 
     }
-    compendiumName = data.context.pack;
   } else {
     let message = duplicate(data);
     message.action = action;

@@ -54,12 +54,13 @@ const classesToPatch = [Actor, Item, Scene, JournalEntry, Macro, RollTable, Play
  */
 export function patchCompendiumCreateEntity() {
   if (CTSettings.is080) {
-    for (let cls of classesToPatch) {
+    for (let baseCls of classesToPatch) {
+      const cls = CONFIG[baseCls.name].documentClass;
       log(`Patching ${cls.name}.create`);
 
       Monkey.replaceFunction(cls, 'create', function(data, context={}) {
-        if (context.pack && !game.user.isGM) {
-          return Compendium._dispatchRemoteUpdate(cls.name, 'create', data, context);
+        if (context.pack && !game.user.isGM && game.user.role >= CTSettings.editUserLevel) {
+          return Compendium._dispatchRemoteUpdate(baseCls.name, 'create', data, context);
         }
         return Monkey.callOriginalFunction(cls, 'create', data, context);
       });
@@ -89,10 +90,10 @@ export function patchCompendiumUpdateEntity() {
   if (CTSettings.is080) {
     for (let baseCls of classesToPatch) {
       const cls = CONFIG[baseCls.name].documentClass;
-      log (`Patching ${cls.name}.update`);
+      log(`Patching ${cls.name}.update`);
 
       Monkey.replaceMethod(cls, 'update', function(data, context={}) {
-        if (this.pack && !game.user.isGM) {
+        if (this.pack && !game.user.isGM && game.user.role >= CTSettings.editUserLevel) {
           context.uuid = this.uuid;
           return Compendium._dispatchRemoteUpdate(baseCls.name, 'update', data, context);
         }
@@ -121,24 +122,39 @@ export function patchCompendiumUpdateEntity() {
  * if user if not GM user.
  */
 export function patchCompendiumDeleteEntity() {
-  log('Patching Compendium.deleteEntity');
+  if (CTSettings.is080) {
+    for (let baseCls of classesToPatch) {
+      const cls = CONFIG[baseCls.name].documentClass;
+      log(`Patching ${cls.name}.delete`);
 
-  let PatchedClass = Compendium;
-  PatchedClass = Monkey.patchMethod(PatchedClass, 'deleteEntity', [
-    { line: 2,
-      original: 'const ids = id instanceof Array ? id : [id];',
-      replacement: `const ids = id instanceof Array ? id : [id];
-        if (!game.user.isGM) return this._dispatchRemoteUpdate('deleteEntity', ids, options);
-      ` }
-  ]);
-  if (!PatchedClass) return;
-  Compendium.prototype.deleteEntity = PatchedClass.prototype.deleteEntity;
+      Monkey.replaceMethod(cls, 'delete', function(context={}) {
+        if (this.pack && !game.user.isGM && game.user.role >= CTSettings.editUserLevel) {
+          context.uuid = this.uuid;
+          return Compendium._dispatchRemoteUpdate(baseCls.name, 'delete', null, context);
+        }
+        return Monkey.callOriginalFunction(this, 'delete', context);
+      });
+    }
+  } else {
+    log('Patching Compendium.deleteEntity');
+  
+    let PatchedClass = Compendium;
+    PatchedClass = Monkey.patchMethod(PatchedClass, 'deleteEntity', [
+      { line: 2,
+        original: 'const ids = id instanceof Array ? id : [id];',
+        replacement: `const ids = id instanceof Array ? id : [id];
+          if (!game.user.isGM) return this._dispatchRemoteUpdate('deleteEntity', ids, options);
+        ` }
+    ]);
+    if (!PatchedClass) return;
+    Compendium.prototype.deleteEntity = PatchedClass.prototype.deleteEntity;
+  }
 }
 
 
 /**
  * Monkey patch private Compendium._assertUserCanModify method to respect
- * the bypass edit lock setting.
+ * the bypass edit lock setting. For pre-0.8.0 only.
  */
 export function patchCompendiumCanModify() {
   log('Patching Compendium._assertUserCanModify');

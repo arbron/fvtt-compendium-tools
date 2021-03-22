@@ -60,15 +60,21 @@ Hooks.once('ready', () => {
 });
 
 Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
-  let insertIndex = entryOptions.findIndex(element => element.name == 'COMPENDIUM.ImportEntry');
+  const canMakeChanges = () => game.user.isGM || (game.user.role >= CTSettings.editUserLevel);
+
+  const insertIndex = entryOptions.findIndex(element => element.name == 'COMPENDIUM.ImportEntry');
   entryOptions.splice(insertIndex + 1, 0, {
     name: 'CompendiumTools.replace.title',
     icon: '<i class="fas fa-sign-in-alt"></i>',
+    condition: canMakeChanges,
     callback: li => {
       const entryId = CTSettings.is080 ? li.attr('data-document-id') : li.attr('data-entry-id');
       return new ReplaceEntry(compendium, entryId).render(true);
     }
   });
+
+  const deleteIndex = entryOptions.findIndex(element => element.name == 'COMPENDIUM.DeleteEntry');
+  entryOptions[deleteIndex].condition = canMakeChanges;
 });
 
 Hooks.on('ctGetModuleManagementItemContext', (html, menuOptions) => {
