@@ -47,19 +47,16 @@ async function executeRemoteOperation(action, data) {
   if (gmUsers[0].id != game.user.id) return;
 
   log(`Remote ${action} entity request received`);
-  let compendiumName;
 
   if (CTSettings.is080) {
     if (action === 'create') {
 
       const documentClass = CONFIG[data.type].documentClass;
       await documentClass.create(data.data, data.context);
-      compendiumName = data.context.pack;
 
     } else {
 
       const doc = await fromUuid(data.context.uuid);
-      compendiumName = doc.pack;
       let newContext = duplicate(data.context);
       newContext.uuid = undefined;
 
@@ -76,10 +73,10 @@ async function executeRemoteOperation(action, data) {
     let message = duplicate(data);
     message.action = action;
     await SocketInterface.dispatch('modifyCompendium', message);
-    compendiumName = message.type;
-  }
 
-  const compendium = game.packs.get(compendiumName);
-  compendium.render(false);
-  emitRenderCompendium(compendiumName);
+    // Re-render compendium
+    const compendium = game.packs.get(message.type);
+    compendium.render(false);
+    emitRenderCompendium(message.type);
+  }
 }
