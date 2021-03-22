@@ -1,5 +1,6 @@
 import constants from './shared/constants.js';
 import { log } from './shared/messages.js';
+import { CTSettings } from './settings.js';
 
 
 export function setupSocketListeners() {
@@ -9,12 +10,15 @@ export function setupSocketListeners() {
     }
     if (!game.user.isGM) return;
     switch (data.operation) {
+      case 'create':
       case 'createEntity':
         executeRemoteOperation('create', data.content);
         break;
+      case 'update':
       case 'updateEntity':
         executeRemoteOperation('update', data.content);
         break;
+      case 'delete':
       case 'deleteEntity':
         executeRemoteOperation('delete', data.content);
         break;
@@ -43,13 +47,34 @@ async function executeRemoteOperation(action, data) {
   if (gmUsers[0].id != game.user.id) return;
 
   log(`Remote ${action} entity request received`);
+  let compendiumName;
 
-  let message = duplicate(data);
-  message.action = action;
+  if (CTSettings.is080) {
+    const documentClass = CONFIG[data.type].documentClass;
 
-  const response = await SocketInterface.dispatch('modifyCompendium', message);
-  const compendium = game.packs.get(message.type);
+    switch (action) {
+      case 'create':
+        await documentClass.create(data.data, data.context);
+        break;
+      case 'update':
+        await documentClass.update(data.data, data.context);
+        break;
+      case 'delete':
+        await documentClass.delete(data.data, data.context);
+        break;
+      default:
+        return;
+    }
+
+    compendiumName = data.context.pack;
+  } else {
+    let message = duplicate(data);
+    message.action = action;
+    await SocketInterface.dispatch('modifyCompendium', message);
+    compendiumName = message.type;
+  }
+
+  const compendium = game.packs.get(compendiumName);
   compendium.render(false);
-
-  emitRenderCompendium(message.type);
+  emitRenderCompendium(compendiumName);
 }

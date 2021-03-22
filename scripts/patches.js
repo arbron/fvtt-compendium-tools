@@ -10,40 +10,74 @@ import { CTSettings } from './settings.js';
 export function addCompendiumDispatchRemoteUpdate() {
   log('Adding Compendium._dispatchRemoteUpdate');
 
-  Compendium.prototype._dispatchRemoteUpdate = function(operation, data, options={}) {
-    if (game.users.filter(user => user.active && user.isGM).length == 0) {
-      return uiError(game.i18n.localize('CompendiumTools.noGMUser'), /* toConsole */ false);
-    }
-
-    game.socket.emit(constants.socket, {
-      operation: operation,
-      user: game.user.id,
-      content: {
-        type: this.collection,
-        data: data,
-        options: options
+  if (CTSettings.is080) {
+    Compendium._dispatchRemoteUpdate = function(type, operation, data, context={}) {
+      if (game.users.filter(user => user.active && user.isGM).length == 0) {
+        return uiError(game.i18n.localize('CompendiumTools.noGMUser'), /* toConsole */ false);
       }
-    });
+
+      game.socket.emit(constants.socket, {
+        operation: operation,
+        user: game.user.id,
+        content: {
+          type: type,
+          data: data,
+          context: context
+        }
+      });
+    }
+  } else {
+    Compendium.prototype._dispatchRemoteUpdate = function(operation, data, options={}) {
+      if (game.users.filter(user => user.active && user.isGM).length == 0) {
+        return uiError(game.i18n.localize('CompendiumTools.noGMUser'), /* toConsole */ false);
+      }
+  
+      game.socket.emit(constants.socket, {
+        operation: operation,
+        user: game.user.id,
+        content: {
+          type: this.collection,
+          data: data,
+          options: options
+        }
+      });
+    }
   }
 }
+
+
+const classesToPatch = [Actor, Item, Scene, JournalEntry, Macro, RollTable, Playlist];
 
 /**
  * Monkey patch Compendium.createEntity method to dispatch creation over socket
  * if user is not GM user.
  */
 export function patchCompendiumCreateEntity() {
-  log('Patching Compendium.createEntity');
+  if (CTSettings.is080) {
+    for (let cls of classesToPatch) {
+      log(`Patching ${cls.name}.create`);
 
-  let PatchedClass = Compendium;
-  PatchedClass = Monkey.patchMethod(PatchedClass, 'createEntity', [
-    { line: 3,
-      original: '',
-      replacement: `
-        if (!game.user.isGM) return this._dispatchRemoteUpdate('createEntity', data, options);
-      ` }
-  ]);
-  if (!PatchedClass) return;
-  Compendium.prototype.createEntity = PatchedClass.prototype.createEntity;
+      Monkey.replaceFunction(cls, 'create', function(data, context={}) {
+        if (context.pack && !game.user.isGM) {
+          return Compendium._dispatchRemoteUpdate(cls.name, 'create', data, context);
+        }
+        return Monkey.callOriginalFunction(cls, 'create', data, context);
+      });
+    }
+  } else {
+    log('Patching Compendium.createEntity');
+  
+    let PatchedClass = Compendium;
+    PatchedClass = Monkey.patchMethod(PatchedClass, 'createEntity', [
+      { line: 3,
+        original: '',
+        replacement: `
+          if (!game.user.isGM) return this._dispatchRemoteUpdate('createEntity', data, options);
+        ` }
+    ]);
+    if (!PatchedClass) return;
+    Compendium.prototype.createEntity = PatchedClass.prototype.createEntity;
+  }
 }
 
 
