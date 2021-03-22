@@ -86,18 +86,33 @@ export function patchCompendiumCreateEntity() {
  * if user if not GM user.
  */
 export function patchCompendiumUpdateEntity() {
-  log('Patching Compendium.updateEntity');
+  if (CTSettings.is080) {
+    for (let baseCls of classesToPatch) {
+      const cls = CONFIG[baseCls.name].documentClass;
+      log (`Patching ${cls.name}.update`);
 
-  let PatchedClass = Compendium;
-  PatchedClass = Monkey.patchMethod(PatchedClass, 'updateEntity', [
-    { line: 17,
-      original: '',
-      replacement: `
-        if (!game.user.isGM) return this._dispatchRemoteUpdate('updateEntity', updates, options);
-      ` }
-  ]);
-  if (!PatchedClass) return;
-  Compendium.prototype.updateEntity = PatchedClass.prototype.updateEntity;
+      Monkey.replaceMethod(cls, 'update', function(data, context={}) {
+        if (this.pack && !game.user.isGM) {
+          context.uuid = this.uuid;
+          return Compendium._dispatchRemoteUpdate(baseCls.name, 'update', data, context);
+        }
+        return Monkey.callOriginalFunction(this, 'update', data, context);
+      });
+    }
+  } else {
+    log('Patching Compendium.updateEntity');
+
+    let PatchedClass = Compendium;
+    PatchedClass = Monkey.patchMethod(PatchedClass, 'updateEntity', [
+      { line: 17,
+        original: '',
+        replacement: `
+          if (!game.user.isGM) return this._dispatchRemoteUpdate('updateEntity', updates, options);
+        ` }
+    ]);
+    if (!PatchedClass) return;
+    Compendium.prototype.updateEntity = PatchedClass.prototype.updateEntity;
+  }
 }
 
 
