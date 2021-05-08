@@ -4,6 +4,7 @@ import { fixMonksLittleDetailsConflict } from './compatibility/monksLittleDetail
 import { fixRollFromCompendiumConflict } from './compatibility/rollFromCompendium.js';
 import { ModuleConfiguration, prepareModuleConfigurationTemplates } from './ModuleConfiguration.js';
 import * as patches from './patches.js';
+import { RefreshFromCompendium } from './RefreshFromCompendium.js';
 import { ReplaceEntry } from './ReplaceEntry.js';
 import { CTSettings } from './settings.js';
 import { setupSocketListeners } from './socket.js';
@@ -87,6 +88,20 @@ Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
   entryOptions[deleteIndex].condition = canMakeChanges;
 });
 
+for ( const type of [ItemDirectory] ) {
+  Hooks.on(`get${type.name}EntryContext`, (html, entryOptions) => {
+    const insertIndex = entryOptions.findIndex(e => e.name === "SIDEBAR.Export");
+    entryOptions.splice(insertIndex, 0, {
+      name: "CompendiumTools.RefreshTitle",
+      icon: '<i class="fas fa-sync"></i>',
+      callback: li => {
+        const document = type.collection.get(li.data("entityId"));
+        return new RefreshFromCompendium(document).render(true);
+      }
+    });
+  });
+}
+
 Hooks.on('ctGetModuleManagementItemContext', moduleManagementContextEntries);
 Hooks.on('_getModuleManagementEntryContext', moduleManagementContextEntries);
 function moduleManagementContextEntries(html, entryOptions) {
@@ -97,6 +112,5 @@ function moduleManagementContextEntries(html, entryOptions) {
       const moduleName = li.attr('data-module-name');
       return new ModuleConfiguration(moduleName).render(true);
     }
-  }
-  );
+  });
 }

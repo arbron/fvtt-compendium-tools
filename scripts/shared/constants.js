@@ -5,6 +5,9 @@ let constants = {
   replaceEntryWidth: 400,
   replaceEntryHeight: 300,
 
+  refreshWidth: 500,
+  refreshHeight: 400,
+
   _updateModuleFeatures: false,
 };
 constants.modulePath = `modules/${constants.moduleName}`;

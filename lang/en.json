@@ -21,6 +21,13 @@
   "CompendiumTools.replace.replaceButton": "Replace",
   "CompendiumTools.replace.cancelButton": "Cancel",
 
+  "CompendiumTools.RefreshConfirmButton": "Refresh",
+  "CompendiumTools.RefreshDropArea": "Drop Souce Here",
+  "CompendiumTools.RefreshMissingLink": "No link to an original compendium source found. Please drop an entry from the compendium below to create the link and refresh.",
+  "CompendiumTools.RefreshSourcePackOnly": "Source must be located within a compendium.",
+  "CompendiumTools.RefreshTitle": "Refresh from Compendium",
+  "CompendiumTools.RefreshTypeError": "Source must be of the same type as the entry being replaced.",
+
   "CompendiumTools.module.editModuleConfiguration": "View Manifest",
   "ComepndiumTools.module.editModuleTitle": "Module Manifest",
   "CompendiumTools.module.headerDetails": "Details",

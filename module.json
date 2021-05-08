@@ -22,7 +22,7 @@
   "allowBugReporter": true,
   "version": "0.4.2",
   "minimumCoreVersion": "0.7.9",
-  "compatibleCoreVersion": "0.8.0",
+  "compatibleCoreVersion": "0.8.2",
   "manifestPlusVersion": "1.1.0",
   "socket": true,
   "esmodules": [
@@ -41,6 +41,7 @@
   "dependencies": [
     {
       "name": "arbron-context-menus",
+      "type": "module",
       "manifest": "https://github.com/arbron/fvtt-context-menu-library/releases/latest/download/module.json"
     }
   ]

@@ -1,0 +1,23 @@
+<div>
+  {{#unless needsSource}}
+
+    {{ name }}
+
+    <footer class="sheet-footer flexrow">
+        <button type="submit" name="refresh">
+            <i class="fas fa-sync"></i> {{ localize "CompendiumTools.RefreshConfirmButton" }}
+        </button>
+        <button type="button" name="cancel">
+            <i class="fas fa-undo"></i> {{ localize "Cancel" }}
+        </button>
+    </footer>
+
+  {{else}}
+
+    <span class="note">{{ localize "CompendiumTools.RefreshMissingLink" }}</span>
+    <div class="drop-area">
+      <strong>{{ localize "CompendiumTools.RefreshDropArea" }}</strong>
+    </div>
+
+  {{/unless}}
+</div>

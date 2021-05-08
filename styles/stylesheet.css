@@ -20,6 +20,7 @@ input[type="email"]:disabled {
   color: #4b4a44;
 }
 
+.ct-refresh-from-compendium .drop-area,
 .ct-replace-entry .drop-area {
   display: flex;
   justify-content: center;
@@ -31,6 +32,7 @@ input[type="email"]:disabled {
   border: 1px inset black;
   background: rgba(0, 0, 0, 0.15);
 }
+.ct-refresh-from-compendium .drop-area strong,
 .ct-replace-entry .drop-area strong {
   text-align: center;
   font-size: 2em;
