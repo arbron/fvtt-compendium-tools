@@ -9,6 +9,7 @@ let constants = {
   refreshHeight: 400,
 
   _updateModuleFeatures: false,
+  _refreshFromCompendiumFeatures: false
 };
 constants.modulePath = `modules/${constants.moduleName}`;
 constants.socket = `module.${constants.moduleName}`;

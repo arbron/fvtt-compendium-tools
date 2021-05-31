@@ -88,18 +88,20 @@ Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
   entryOptions[deleteIndex].condition = canMakeChanges;
 });
 
-for ( const type of [ItemDirectory] ) {
-  Hooks.on(`get${type.name}EntryContext`, (html, entryOptions) => {
-    const insertIndex = entryOptions.findIndex(e => e.name === "SIDEBAR.Export");
-    entryOptions.splice(insertIndex, 0, {
-      name: "CompendiumTools.RefreshTitle",
-      icon: '<i class="fas fa-sync"></i>',
-      callback: li => {
-        const document = type.collection.get(li.data("entityId"));
-        return new RefreshFromCompendium(document).render(true);
-      }
+if (constants._refreshFromCompendiumFeatures) {
+  for ( const type of [ItemDirectory] ) {
+    Hooks.on(`get${type.name}EntryContext`, (html, entryOptions) => {
+      const insertIndex = entryOptions.findIndex(e => e.name === "SIDEBAR.Export");
+      entryOptions.splice(insertIndex, 0, {
+        name: "CompendiumTools.RefreshTitle",
+        icon: '<i class="fas fa-sync"></i>',
+        callback: li => {
+          const document = type.collection.get(li.data("entityId"));
+          return new RefreshFromCompendium(document).render(true);
+        }
+      });
     });
-  });
+  }
 }
 
 Hooks.on('ctGetModuleManagementItemContext', moduleManagementContextEntries);
