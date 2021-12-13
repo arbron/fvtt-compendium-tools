@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.4.4
+ - Upgrade compatible core version to v9
+
 # 0.4.3
  - Upgrade compatible core version to 0.8.6
 

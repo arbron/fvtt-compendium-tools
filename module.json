@@ -1,11 +1,11 @@
 {
   "name": "compendium-tools",
-  "title": "Arbron's Compendium Tools",
+  "title": "Arbron’s Compendium Tools",
   "description": "Tools to make updating compendium packs and modules to hold those packs easier.",
-  "author": "Jeff 'Arbron' Hitchcock",
+  "author": "Jeff ‘Arbron’ Hitchcock",
   "authors": [
     {
-      "name": "Jeff 'Arbron' Hitchcock",
+      "name": "Jeff ‘Arbron’ Hitchcock",
       "url": "https://moviemaps.org",
       "email": "jeff@szed.co",
       "discord": "arbron#6515",
@@ -20,9 +20,9 @@
   "changelog": "https://raw.githubusercontent.com/arbron/fvtt-compendium-tools/main/changelog.md",
   "bugs": "https://github.com/arbron/fvtt-compendium-tools/issues",
   "allowBugReporter": true,
-  "version": "0.4.3",
+  "version": "0.4.4",
   "minimumCoreVersion": "0.7.9",
-  "compatibleCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "9",
   "manifestPlusVersion": "1.1.0",
   "socket": true,
   "esmodules": [

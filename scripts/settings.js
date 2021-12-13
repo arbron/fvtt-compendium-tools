@@ -10,7 +10,7 @@ const EDIT_USER_LEVEL = 'edit-user-level';
 
 class Settings {
   init() {
-    this.is080 = !isNewerVersion("0.8.0", game.data.version);
+    this.is080 = !isNewerVersion("0.8.0", game.version ?? game.data.version);
 
     log('Registering settings');
     if (!this.is080) {
