@@ -4,6 +4,7 @@
  - Switch to using new `getCompendiumEntryContext` hook if using v10
  - Adjust patching to use libWrapper if available
  - Upgrade compatible core version to v10
+ - Drop support for 0.7 & 0.8
 
 # 0.4.4
  - Add Korean translation (thanks [drdwing](https://github.com/drdwing))

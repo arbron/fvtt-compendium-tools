@@ -3,7 +3,6 @@
   "name": "compendium-tools",
   "title": "Arbron’s Compendium Tools",
   "description": "Tools to make updating compendium packs and modules to hold those packs easier.",
-  "author": "Jeff ‘Arbron’ Hitchcock",
   "authors": [
     {
       "name": "Jeff ‘Arbron’ Hitchcock",
@@ -21,10 +20,10 @@
   "changelog": "https://raw.githubusercontent.com/arbron/fvtt-compendium-tools/main/changelog.md",
   "bugs": "https://github.com/arbron/fvtt-compendium-tools/issues",
   "version": "0.5.0",
-  "minimumCoreVersion": "0.7.9",
+  "minimumCoreVersion": "9",
   "compatibleCoreVersion": "10",
   "compatibility": {
-    "minimum": "0.7.9",
+    "minimum": "9",
     "verified": "10"
   },
   "relationships": {

@@ -19,7 +19,6 @@ Hooks.once('setup', () => {
   patches.patchCompendiumCreateEntity();
   patches.patchCompendiumUpdateEntity();
   patches.patchCompendiumDeleteEntity();
-  if (!CTSettings.is080) patches.patchCompendiumCanModify();
 
   fixMonksLittleDetailsConflict();
   fixRollFromCompendiumConflict();
@@ -28,7 +27,7 @@ Hooks.once('setup', () => {
 
   setupSocketListeners();
 
-  if ( game.release?.generation >= 10 ) Hooks.on('getCompendiumEntryContext', (html, entryOptions) => {
+  if ( game.release.generation >= 10 ) Hooks.on('getCompendiumEntryContext', (html, entryOptions) => {
     const compendiumSheet = game.packs.get(html[0].dataset.pack)?.apps[0];
     getCompendiumEntryContext(compendiumSheet, html, entryOptions);
   });
@@ -81,7 +80,7 @@ function getCompendiumEntryContext(compendium, html, entryOptions) {
     icon: '<i class="fas fa-sign-in-alt"></i>',
     condition: canMakeChanges,
     callback: li => {
-      const entryId = CTSettings.is080 ? li.attr('data-document-id') : li.attr('data-entry-id');
+      const entryId = li.attr('data-document-id');
       return new ReplaceEntry(compendium, entryId).render(true);
     }
   });

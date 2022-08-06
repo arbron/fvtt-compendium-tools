@@ -53,22 +53,14 @@ export class ReplaceEntry extends Application {
    * @return {Document}
    */
   async _getDocument(id) {
-    if (CTSettings.is080) {
-      return this.compendium.collection.getDocument(id);
-    } else {
-      return this.compendium.getEntity(id);
-    }
+    return this.compendium.collection.getDocument(id);
   }
 
   /**
    * Fetch item from drop data.
    */
   async _fromDropData(data) {
-    if (CTSettings.is080) {
-      return this.compendium.collection.documentClass.fromDropData(data);
-    } else {
-      return this.compendium.cls.fromDropData(data);
-    }
+    return this.compendium.collection.documentClass.fromDropData(data);
   }
 
   /**
@@ -87,8 +79,7 @@ export class ReplaceEntry extends Application {
     if (!data.type) throw new Error("You must define the type of entity being dropped");
 
     let entityType;
-    if ( !CTSettings.is080 ) entityType = this.compendium.entity;
-    else if ( game.release.generation < 10 ) entityType = this.compendium.collection.metadata.entity;
+    if ( game.release.generation < 10 ) entityType = this.compendium.collection.metadata.entity;
     else entityType = this.compendium.collection.metadata.type;
     if (data.type != entityType) {
       uiError('CompendiumTools.replace.typeError', false);
@@ -135,13 +126,7 @@ export class ReplaceEntry extends Application {
    */
   async _finalizeReplacement(original, replacement) {
     let entityData = await replacement.toCompendium();
-    if (CTSettings.is080) {
-      original.update(entityData);
-    } else {
-      // Update the existing entry
-      entityData._id = this.entryId;
-      this.compendium.updateEntity(entityData);
-    }
+    original.update(entityData);
 
     await this.close();
   }

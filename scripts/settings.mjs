@@ -5,24 +5,11 @@ const curryRegister = (module) => (key, data) => game.settings.register(module, 
 const register = curryRegister(constants.moduleName);
 
 const ALLOW_MODULE_EDITING = 'allow-module-editing';
-const BYPASS_EDIT_LOCK = 'bypass-edit-lock';
 const EDIT_USER_LEVEL = 'edit-user-level';
 
 class Settings {
   init() {
-    this.is080 = !isNewerVersion("0.8.0", game.version ?? game.data.version);
-
     log('Registering settings');
-    if (!this.is080) {
-      register(BYPASS_EDIT_LOCK, {
-        name: game.i18n.localize('CompendiumTools.bypassEditLock.name'),
-        hint: game.i18n.localize('CompendiumTools.bypassEditLock.hint'),
-        scope: 'world',
-        config: true,
-        default: false,
-        type: Boolean
-      });
-    }
     register(EDIT_USER_LEVEL, {
       name: game.i18n.localize('CompendiumTools.editUserLevel.name'),
       hint: game.i18n.localize('CompendiumTools.editUserLevel.hint'),
@@ -67,10 +54,6 @@ class Settings {
       case 'none':
         return false;
     }
-  }
-
-  get bypassEditLock() {
-    return Settings._get(BYPASS_EDIT_LOCK);
   }
 
   get editUserLevel() {

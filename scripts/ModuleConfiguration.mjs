@@ -29,7 +29,7 @@ export class ModuleConfiguration extends FormApplication {
    */
   get moduleData() {
     const module = game.modules.get(this.moduleName);
-    if ( game.release?.generation < 10 ) return module.data;
+    if ( game.release.generation < 10 ) return module.data;
     return module;
   }
 
