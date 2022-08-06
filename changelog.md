@@ -1,6 +1,7 @@
 # Changelog
 
 # 0.5.0
+ - Switch to using new `getCompendiumEntryContext` hook if using v10
  - Upgrade compatible core version to v10
 
 # 0.4.4

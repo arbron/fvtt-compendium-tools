@@ -27,6 +27,13 @@ Hooks.once('setup', () => {
   prepareModuleConfigurationTemplates();
 
   setupSocketListeners();
+
+  if ( game.release?.generation >= 10 ) Hooks.on('getCompendiumEntryContext', (html, entryOptions) => {
+    const compendiumSheet = game.packs.get(html[0].dataset.pack)?.apps[0];
+    getCompendiumEntryContext(compendiumSheet, html, entryOptions);
+  });
+  else Hooks.on('_getCompendiumEntryContext', getCompendiumEntryContext);
+  Hooks.on('_getModuleManagementEntryContext', moduleManagementContextEntries);
 });
 
 Hooks.once('ready', () => {
@@ -65,7 +72,7 @@ Hooks.once('ready', () => {
 /*         Context Menus         */
 /* ----------------------------- */
 
-Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
+function getCompendiumEntryContext(compendium, html, entryOptions) {
   const canMakeChanges = () => game.user.isGM || (game.user.role >= CTSettings.editUserLevel);
 
   const insertIndex = entryOptions.findIndex(element => element.name == 'COMPENDIUM.ImportEntry');
@@ -81,7 +88,7 @@ Hooks.on('_getCompendiumEntryContext', (compendium, html, entryOptions) => {
 
   const deleteIndex = entryOptions.findIndex(element => element.name == 'COMPENDIUM.DeleteEntry');
   entryOptions[deleteIndex].condition = canMakeChanges;
-});
+}
 
 if (constants._refreshFromCompendiumFeatures) {
   for ( const type of [ItemDirectory] ) {
@@ -99,13 +106,12 @@ if (constants._refreshFromCompendiumFeatures) {
   }
 }
 
-Hooks.on('_getModuleManagementEntryContext', moduleManagementContextEntries);
 function moduleManagementContextEntries(html, entryOptions) {
   entryOptions.push({
     name: 'CompendiumTools.module.editModuleConfiguration',
     icon: '<i class="fas fa-edit"></i>',
     callback: li => {
-      const moduleName = li.attr('data-module-name');
+      const moduleName = li[0].dataset.moduleId ?? li[0].dataset.moduleName;
       return new ModuleConfiguration(moduleName).render(true);
     }
   });

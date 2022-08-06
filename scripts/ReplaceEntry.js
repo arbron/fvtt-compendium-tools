@@ -86,7 +86,10 @@ export class ReplaceEntry extends Application {
     // Ensure an entity type was indicated
     if (!data.type) throw new Error("You must define the type of entity being dropped");
 
-    const entityType = CTSettings.is080 ? this.compendium.collection.metadata.entity : this.compendium.entity;
+    let entityType;
+    if ( !CTSettings.is080 ) entityType = this.compendium.entity;
+    else if ( game.release.generation < 10 ) entityType = this.compendium.collection.metadata.entity;
+    else entityType = this.compendium.collection.metadata.type;
     if (data.type != entityType) {
       uiError('CompendiumTools.replace.typeError', false);
       return;
@@ -97,12 +100,14 @@ export class ReplaceEntry extends Application {
     const replacementDocument = await this._fromDropData(data);
 
     // Confirm types match and present confirmation dialog if they do not
-    if (originalDocument.data.type != replacementDocument.data.type) {
+    const originalType = originalDocument.type ?? originalDocument.data.type;
+    const replacementType = replacementDocument.type ?? replacementDocument.data.type;
+    if (originalType != replacementType) {
       let confirmationDialog = new Dialog({
         title: game.i18n.localize('CompendiumTools.replace.subtypeMismatchTitle'),
         content: game.i18n.format('CompendiumTools.replace.subtypeMismatchWarning', {
-          originalType: game.i18n.localize(CONFIG[entityType].typeLabels[originalDocument.data.type]),
-          replacementType: game.i18n.localize(CONFIG[entityType].typeLabels[replacementDocument.data.type])
+          originalType: game.i18n.localize(CONFIG[entityType].typeLabels[originalType]),
+          replacementType: game.i18n.localize(CONFIG[entityType].typeLabels[replacementType])
         }),
         buttons: {
           replace: {

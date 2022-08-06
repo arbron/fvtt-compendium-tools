@@ -23,26 +23,36 @@ export class ModuleConfiguration extends FormApplication {
     });
   }
 
+  /**
+   * Help for retrieving the module's data.
+   * @returns {object}
+   */
+  get moduleData() {
+    const module = game.modules.get(this.moduleName);
+    if ( game.release?.generation < 10 ) return module.data;
+    return module;
+  }
+
   /** @override */
   get isEditable() {
     if (!constants._updateModuleFeatures) return false;
 
     const module = game.modules.get(this.moduleName).data;
-    return (game.user.isGM && CTSettings.allowModuleEditing(/* isLocal */ module.manifest == ''));
+    return (game.user.isGM && CTSettings.allowModuleEditing(/* isLocal */ this.moduleData.manifest == ''));
   }
 
   /** @override */
   getData(options) {
-    const data = Object.assign({}, game.modules.get(this.moduleName).data);
+    const data = Object.assign({}, this.moduleData);
 
     // Join scripts into single array split by type
-    let traditionalScripts = data.scripts.map(script => {
+    let traditionalScripts = Array.from(data.scripts).map(script => {
       return { path: script, type: 'traditional' };
     });
-    let moduleScripts = data.esmodules.map(script => {
+    let moduleScripts = Array.from(data.esmodules).map(script => {
       return { path: script, type: 'module' };
     });
-    data.combinedScripts = traditionalScripts.concat(moduleScripts);
+    data.combinedScripts = [...traditionalScripts, ...moduleScripts];
 
     data.isDeprecated = data.deprecated !== undefined;
 
