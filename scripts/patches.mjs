@@ -31,7 +31,7 @@ export function addCompendiumDispatchRemoteUpdate() {
       if (game.users.filter(user => user.active && user.isGM).length == 0) {
         return uiError(game.i18n.localize('CompendiumTools.noGMUser'), /* toConsole */ false);
       }
-  
+
       game.socket.emit(constants.socket, {
         operation: operation,
         user: game.user.id,
@@ -54,20 +54,20 @@ const classesToPatch = [Actor, Item, Scene, JournalEntry, Macro, RollTable, Play
  */
 export function patchCompendiumCreateEntity() {
   if (CTSettings.is080) {
-    for (let baseCls of classesToPatch) {
+    for (const baseCls of classesToPatch) {
       const cls = CONFIG[baseCls.name].documentClass;
       log(`Patching ${cls.name}.create`);
 
-      Monkey.replaceFunction(cls, 'create', function(data, context={}) {
+      Monkey.mix(`CONFIG.${baseCls.name}.documentClass.create`, function(wrapped, data, context={}) {
         if (context.pack && !game.user.isGM && game.user.role >= CTSettings.editUserLevel) {
           return Compendium._dispatchRemoteUpdate(baseCls.name, 'create', data, context);
         }
-        return Monkey.callOriginalFunction(cls, 'create', data, context);
+        return wrapped(data, context);
       });
     }
   } else {
     log('Patching Compendium.createEntity');
-  
+
     let PatchedClass = Compendium;
     PatchedClass = Monkey.patchMethod(PatchedClass, 'createEntity', [
       { line: 3,
@@ -88,16 +88,16 @@ export function patchCompendiumCreateEntity() {
  */
 export function patchCompendiumUpdateEntity() {
   if (CTSettings.is080) {
-    for (let baseCls of classesToPatch) {
+    for (const baseCls of classesToPatch) {
       const cls = CONFIG[baseCls.name].documentClass;
       log(`Patching ${cls.name}.update`);
 
-      Monkey.replaceMethod(cls, 'update', function(data, context={}) {
+      Monkey.mix(`CONFIG.${baseCls.name}.documentClass.prototype.update`, function(wrapped, data, context={}) {
         if (this.pack && !game.user.isGM && game.user.role >= CTSettings.editUserLevel) {
           context.uuid = this.uuid;
           return Compendium._dispatchRemoteUpdate(baseCls.name, 'update', data, context);
         }
-        return Monkey.callOriginalFunction(this, 'update', data, context);
+        return wrapped(data, context);
       });
     }
   } else {
@@ -127,17 +127,17 @@ export function patchCompendiumDeleteEntity() {
       const cls = CONFIG[baseCls.name].documentClass;
       log(`Patching ${cls.name}.delete`);
 
-      Monkey.replaceMethod(cls, 'delete', function(context={}) {
+      Monkey.mix(`CONFIG.${baseCls.name}.documentClass.prototype.delete`, function(wrapped, context={}) {
         if (this.pack && !game.user.isGM && game.user.role >= CTSettings.editUserLevel) {
           context.uuid = this.uuid;
           return Compendium._dispatchRemoteUpdate(baseCls.name, 'delete', null, context);
         }
-        return Monkey.callOriginalFunction(this, 'delete', context);
+        return wrapped(context);
       });
     }
   } else {
     log('Patching Compendium.deleteEntity');
-  
+
     let PatchedClass = Compendium;
     PatchedClass = Monkey.patchMethod(PatchedClass, 'deleteEntity', [
       { line: 2,
@@ -159,7 +159,7 @@ export function patchCompendiumDeleteEntity() {
 export function patchCompendiumCanModify() {
   log('Patching Compendium._assertUserCanModify');
 
-  Monkey.replaceMethod(Compendium, '_assertUserCanModify', function(options={}) {
+  Monkey.mix("Compendium.prototype._assertUserCanModify", function(wrapped, options={}) {
     if (CTSettings.bypassEditLock) options.requireUnlocked = false;
     if (game.user.role < CTSettings.editUserLevel) {
       let err = new Error('You do not have permission to modify this compendium pack');
@@ -168,6 +168,6 @@ export function patchCompendiumCanModify() {
     } else {
       options.requireGM = false;
     }
-    return Monkey.callOriginalFunction(this, '_assertUserCanModify', options);
+    return wrapped(options);
   });
 }

@@ -2,6 +2,7 @@
 
 # 0.5.0
  - Switch to using new `getCompendiumEntryContext` hook if using v10
+ - Adjust patching to use libWrapper if available
  - Upgrade compatible core version to v10
 
 # 0.4.4
