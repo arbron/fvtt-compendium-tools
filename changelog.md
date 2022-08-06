@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.5.0
+ - Upgrade compatible core version to v10
+
 # 0.4.4
  - Add Korean translation (thanks [drdwing](https://github.com/drdwing))
  - Upgrade compatible core version to v9

@@ -21,11 +21,6 @@ Hooks.once('setup', () => {
   patches.patchCompendiumDeleteEntity();
   if (!CTSettings.is080) patches.patchCompendiumCanModify();
 
-  const contextMenuLibrary = game.modules.get('arbron-context-menus');
-  if (contextMenuLibrary && isNewerVersion("0.2.0", contextMenuLibrary.data.version)) {
-    patches.patchModuleMenus();
-  }
-
   fixMonksLittleDetailsConflict();
   fixRollFromCompendiumConflict();
 
@@ -104,7 +99,6 @@ if (constants._refreshFromCompendiumFeatures) {
   }
 }
 
-Hooks.on('ctGetModuleManagementItemContext', moduleManagementContextEntries);
 Hooks.on('_getModuleManagementEntryContext', moduleManagementContextEntries);
 function moduleManagementContextEntries(html, entryOptions) {
   entryOptions.push({

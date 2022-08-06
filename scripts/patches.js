@@ -171,27 +171,3 @@ export function patchCompendiumCanModify() {
     return Monkey.callOriginalFunction(this, '_assertUserCanModify', options);
   });
 }
-
-
-/**
- * Monkey patch ModuleMangement.activateListeners to add the option of displaying
- * a context menu for each module.
- */
-export function patchModuleMenus() {
-  log('Patching ModuleManagement.activateListeners');
-
-  const PatchedClass = Monkey.patchMethod(ModuleManagement, 'activateListeners', [
-    { line: 6,
-      original: '',
-      replacement: '\n//Context menu for each entry\nthis._contextMenu(html);'
-    }
-  ]);
-  if (!PatchedClass) return;
-
-  ModuleManagement.prototype.activateListeners = PatchedClass.prototype.activateListeners;
-  ModuleManagement.prototype._contextMenu = function(html) {
-    const contextOptions = [];
-    Hooks.callAll('ctGetModuleManagementItemContext', html, contextOptions);
-    if (contextOptions) new ContextMenu(html, '.package', contextOptions);
-  }
-}

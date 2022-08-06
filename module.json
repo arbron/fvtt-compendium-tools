@@ -1,4 +1,5 @@
 {
+  "id": "compendium-tools",
   "name": "compendium-tools",
   "title": "Arbron’s Compendium Tools",
   "description": "Tools to make updating compendium packs and modules to hold those packs easier.",
@@ -19,11 +20,26 @@
   "readme": "https://raw.githubusercontent.com/arbron/fvtt-compendium-tools/main/readme.md",
   "changelog": "https://raw.githubusercontent.com/arbron/fvtt-compendium-tools/main/changelog.md",
   "bugs": "https://github.com/arbron/fvtt-compendium-tools/issues",
-  "allowBugReporter": true,
-  "version": "0.4.4",
+  "version": "0.5.0",
   "minimumCoreVersion": "0.7.9",
-  "compatibleCoreVersion": "9",
-  "manifestPlusVersion": "1.1.0",
+  "compatibleCoreVersion": "10",
+  "compatibility": {
+    "minimum": "0.7.9",
+    "verified": "10"
+  },
+  "relationships": {
+    "requires": [
+      {
+        "id": "arbron-context-menus",
+        "type": "module",
+        "manifest": "https://gitlab.com/asacolips-projects/foundry-mods/archmage/-/raw/master/system.json",
+        "compatibility": {
+          "minimum": "0.2.0",
+          "verified": "0.3"
+        }
+      }
+    ]
+  },
   "socket": true,
   "esmodules": [
     "./scripts/main.js"
@@ -49,5 +65,9 @@
       "type": "module",
       "manifest": "https://github.com/arbron/fvtt-context-menu-library/releases/latest/download/module.json"
     }
-  ]
+  ],
+  "manifestPlusVersion": "1.1.0",
+  "flags": {
+    "allowBugReporter": true
+  }
 }
