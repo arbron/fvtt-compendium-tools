@@ -1,5 +1,5 @@
-import constants from './constants.js';
-import { log } from './messages.js';
+import constants from './constants.mjs';
+import { log } from './messages.mjs';
 
 export async function registerPartial(name, path) {
   const compiled = await getTemplate(`${constants.templateRoot}/${path}`);

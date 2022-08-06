@@ -1,13 +1,13 @@
-import constants from './shared/constants.js';
-import { log, uiError } from './shared/messages.js';
-import { fixMonksLittleDetailsConflict } from './compatibility/monksLittleDetails.js';
-import { fixRollFromCompendiumConflict } from './compatibility/rollFromCompendium.js';
-import { ModuleConfiguration, prepareModuleConfigurationTemplates } from './ModuleConfiguration.js';
-import * as patches from './patches.js';
-import { RefreshFromCompendium } from './RefreshFromCompendium.js';
-import { ReplaceEntry } from './ReplaceEntry.js';
-import { CTSettings } from './settings.js';
-import { setupSocketListeners } from './socket.js';
+import constants from './shared/constants.mjs';
+import { log, uiError } from './shared/messages.mjs';
+import { fixMonksLittleDetailsConflict } from './compatibility/monksLittleDetails.mjs';
+import { fixRollFromCompendiumConflict } from './compatibility/rollFromCompendium.mjs';
+import { ModuleConfiguration, prepareModuleConfigurationTemplates } from './ModuleConfiguration.mjs';
+import * as patches from './patches.mjs';
+import { RefreshFromCompendium } from './RefreshFromCompendium.mjs';
+import { ReplaceEntry } from './ReplaceEntry.mjs';
+import { CTSettings } from './settings.mjs';
+import { setupSocketListeners } from './socket.mjs';
 
 
 Hooks.once('init', () => {

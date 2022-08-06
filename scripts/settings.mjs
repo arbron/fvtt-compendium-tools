@@ -1,5 +1,5 @@
-import constants from './shared/constants.js';
-import { log } from './shared/messages.js';
+import constants from './shared/constants.mjs';
+import { log } from './shared/messages.mjs';
 
 const curryRegister = (module) => (key, data) => game.settings.register(module, key, data);
 const register = curryRegister(constants.moduleName);

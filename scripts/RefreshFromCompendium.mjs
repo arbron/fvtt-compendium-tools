@@ -1,5 +1,5 @@
-import constants from './shared/constants.js';
-import { uiError } from './shared/messages.js';
+import constants from './shared/constants.mjs';
+import { uiError } from './shared/messages.mjs';
 
 
 /**
@@ -16,7 +16,7 @@ export class RefreshFromCompendium extends Application {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      template: `${constants.templateRoot}/refreshFromCompendium.html`,
+      template: `${constants.templateRoot}/refreshFromCompendium.hbs`,
       title: game.i18n.localize('CompendiumTools.RefreshTitle'),
       width: constants.refreshWidth,
       height: constants.refreshHeight,

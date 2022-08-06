@@ -1,6 +1,6 @@
-import constants from './shared/constants.js';
-import { log } from './shared/messages.js';
-import { CTSettings } from './settings.js';
+import constants from './shared/constants.mjs';
+import { log } from './shared/messages.mjs';
+import { CTSettings } from './settings.mjs';
 
 
 export function setupSocketListeners() {

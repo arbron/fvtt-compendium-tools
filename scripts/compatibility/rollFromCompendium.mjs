@@ -1,4 +1,4 @@
-import { log } from '../shared/messages.js';
+import { log } from '../shared/messages.mjs';
 
 export function fixRollFromCompendiumConflict() {
   const module = game.modules.get('roll-from-compendium');

@@ -1,7 +1,7 @@
-import constants from './shared/constants.js';
-import { parseFormData } from './shared/forms.js';
-import { registerPartial } from './shared/templates.js';
-import { CTSettings } from './settings.js';
+import constants from './shared/constants.mjs';
+import { parseFormData } from './shared/forms.mjs';
+import { registerPartial } from './shared/templates.mjs';
+import { CTSettings } from './settings.mjs';
 
 
 export class ModuleConfiguration extends FormApplication {
@@ -15,7 +15,7 @@ export class ModuleConfiguration extends FormApplication {
     return mergeObject(super.defaultOptions, {
       title: game.i18n.localize('ComepndiumTools.module.editModuleTitle'),
       id: 'module-configuration',
-      template: `${constants.templateRoot}/moduleConfiguration.html`,
+      template: `${constants.templateRoot}/moduleConfiguration.hbs`,
       width: 680,
       height: window.innerHeight - 100,
       classes: ['ct-module-configuration'],
@@ -81,14 +81,14 @@ export class ModuleConfiguration extends FormApplication {
 }
 
 export function prepareModuleConfigurationTemplates() {
-  registerPartial('moduleAlternative', 'moduleAlternative.html');
-  registerPartial('moduleAuthor', 'moduleAuthor.html');
-  registerPartial('moduleConflict', 'moduleConflict.html');
-  registerPartial('moduleDependency', 'moduleDependency.html');
-  registerPartial('moduleInclude', 'moduleInclude.html');
-  registerPartial('moduleLanguage', 'moduleLanguage.html');
-  registerPartial('moduleMedia', 'moduleMedia.html');
-  registerPartial('modulePack', 'modulePack.html');
-  registerPartial('moduleScript', 'moduleScript.html');
-  registerPartial('moduleStyle', 'moduleStyle.html');
+  registerPartial('moduleAlternative', 'moduleAlternative.hbs');
+  registerPartial('moduleAuthor', 'moduleAuthor.hbs');
+  registerPartial('moduleConflict', 'moduleConflict.hbs');
+  registerPartial('moduleDependency', 'moduleDependency.hbs');
+  registerPartial('moduleInclude', 'moduleInclude.hbs');
+  registerPartial('moduleLanguage', 'moduleLanguage.hbs');
+  registerPartial('moduleMedia', 'moduleMedia.hbs');
+  registerPartial('modulePack', 'modulePack.hbs');
+  registerPartial('moduleScript', 'moduleScript.hbs');
+  registerPartial('moduleStyle', 'moduleStyle.hbs');
 }

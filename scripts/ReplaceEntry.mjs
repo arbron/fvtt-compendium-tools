@@ -1,6 +1,6 @@
-import constants from './shared/constants.js';
-import { log, uiError } from './shared/messages.js';
-import { CTSettings } from './settings.js';
+import constants from './shared/constants.mjs';
+import { log, uiError } from './shared/messages.mjs';
+import { CTSettings } from './settings.mjs';
 
 /**
  * The ReplaceEntry class provides an interface for replacing an entry
@@ -20,7 +20,7 @@ export class ReplaceEntry extends Application {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      template: `${constants.templateRoot}/replaceEntry.html`,
+      template: `${constants.templateRoot}/replaceEntry.hbs`,
       title: game.i18n.localize('CompendiumTools.replace.title'),
       width: constants.replaceEntryWidth,
       height: constants.replaceEntryHeight,
