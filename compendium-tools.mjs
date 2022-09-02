@@ -18,9 +18,6 @@ Hooks.once('setup', () => {
   patches.patchCompendiumUpdateEntity();
   patches.patchCompendiumDeleteEntity();
 
-  fixMonksLittleDetailsConflict();
-  fixRollFromCompendiumConflict();
-
   prepareModuleConfigurationTemplates();
 
   setupSocketListeners();
