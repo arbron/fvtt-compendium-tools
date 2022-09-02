@@ -1,7 +1,5 @@
 import constants from './shared/constants.mjs';
 import { log, uiError } from './shared/messages.mjs';
-import { fixMonksLittleDetailsConflict } from './compatibility/monksLittleDetails.mjs';
-import { fixRollFromCompendiumConflict } from './compatibility/rollFromCompendium.mjs';
 import { ModuleConfiguration, prepareModuleConfigurationTemplates } from './ModuleConfiguration.mjs';
 import * as patches from './patches.mjs';
 import { RefreshFromCompendium } from './RefreshFromCompendium.mjs';
