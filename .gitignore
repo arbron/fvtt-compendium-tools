@@ -1,2 +1,5 @@
 .DS_Store
 .nova
+
+/*.lock
+node_modules

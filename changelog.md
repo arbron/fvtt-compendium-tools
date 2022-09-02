@@ -2,7 +2,9 @@
 
 # 0.5.0
  - Switch to using new `getCompendiumEntryContext` hook if using v10
+ - Switch to single-file javascript release to avoid unnecessary downloads
  - Adjust patching to use libWrapper if available
+ - Remove obsolete compatibility shims for [Quick Rolls to Chat](https://github.com/itamarcu/roll-from-compendium) & [Monk's Little Details](https://github.com/ironmonk88/monks-little-details) 
  - Upgrade compatible core version to v10
  - Drop support for 0.7 & 0.8
 

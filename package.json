@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "build": "gulp buildJS"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "gulp": "^4.0.2",
+    "path": "^0.12.7",
+    "rollup": "^2.77.0"
+  }
+}

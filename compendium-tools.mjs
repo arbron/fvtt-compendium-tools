@@ -1,11 +1,11 @@
-import constants from './shared/constants.mjs';
-import { log, uiError } from './shared/messages.mjs';
-import { ModuleConfiguration, prepareModuleConfigurationTemplates } from './ModuleConfiguration.mjs';
-import * as patches from './patches.mjs';
-import { RefreshFromCompendium } from './RefreshFromCompendium.mjs';
-import { ReplaceEntry } from './ReplaceEntry.mjs';
-import { CTSettings } from './settings.mjs';
-import { setupSocketListeners } from './socket.mjs';
+import constants from './module/shared/constants.mjs';
+import { log, uiError } from './module/shared/messages.mjs';
+import { ModuleConfiguration, prepareModuleConfigurationTemplates } from './module/ModuleConfiguration.mjs';
+import * as patches from './module/patches.mjs';
+import { RefreshFromCompendium } from './module/RefreshFromCompendium.mjs';
+import { ReplaceEntry } from './module/ReplaceEntry.mjs';
+import { CTSettings } from './module/settings.mjs';
+import { setupSocketListeners } from './module/socket.mjs';
 
 
 Hooks.once('init', () => {

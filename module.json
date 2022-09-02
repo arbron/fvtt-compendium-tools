@@ -41,10 +41,10 @@
   },
   "socket": true,
   "esmodules": [
-    "./scripts/main.mjs"
+    "./compendium-tools.mjs"
   ],
   "styles": [
-    "./styles/stylesheet.css"
+    "./compendium-tools.css"
   ],
   "languages": [
     {
@@ -65,7 +65,7 @@
       "manifest": "https://github.com/arbron/fvtt-context-menu-library/releases/latest/download/module.json"
     }
   ],
-  "manifestPlusVersion": "1.1.0",
+  "manifestPlusVersion": "1.2.0",
   "flags": {
     "allowBugReporter": true
   }

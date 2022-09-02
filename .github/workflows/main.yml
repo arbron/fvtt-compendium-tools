@@ -25,8 +25,23 @@ jobs:
         manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
         download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip
 
+    # Set up Node
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Rollup
+      run: |
+        npm run build --if-present
+        mv --force summoner-compiled.mjs summoner.mjs
+
     # Create a zip file with all files required by the module to add to the release
-    - run: zip -r ./module.zip module.json changelog.md readme.md lang/ scripts/ styles/ templates/
+    - run: zip -r ./module.zip module.json changelog.md readme.md LICENSE compendium-tools.mjs compendium-tools.css lang/ templates/
 
     # Create a release for this specific version
     - name: Update Release with Files
