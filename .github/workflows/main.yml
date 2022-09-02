@@ -38,10 +38,10 @@ jobs:
     - name: Rollup
       run: |
         npm run build --if-present
-        mv --force summoner-compiled.mjs summoner.mjs
+        mv --force compendium-tools-compiled.mjs compendium-tools.mjs
 
     # Create a zip file with all files required by the module to add to the release
-    - run: zip -r ./module.zip module.json changelog.md readme.md LICENSE compendium-tools.mjs compendium-tools.css lang/ templates/
+    - run: zip -r ./module.zip module.json changelog.md readme.md LICENSE compendium-tools.mjs compendium-tools-compiled.mjs.map compendium-tools.css lang/ templates/
 
     # Create a release for this specific version
     - name: Update Release with Files
