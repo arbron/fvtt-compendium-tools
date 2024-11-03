@@ -12,6 +12,7 @@ export class ModuleConfiguration extends FormApplication {
 
   /** @override */
   static get defaultOptions() {
+    const mergeObject = foundry.utils?.mergeObject ?? globalThis.mergeObject;
     return mergeObject(super.defaultOptions, {
       title: game.i18n.localize('ComepndiumTools.module.editModuleTitle'),
       id: 'module-configuration',

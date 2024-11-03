@@ -22,7 +22,10 @@ Hooks.once('setup', () => {
 
   setupSocketListeners();
 
-  if ( game.release.generation >= 10 ) Hooks.on('getCompendiumEntryContext', (html, entryOptions) => {
+  if ( game.release.generation === 12 ) Hooks.on('getCompendiumEntryContext', (app, entryOptions) => {
+    getCompendiumEntryContext(app, null, entryOptions);
+  });
+  else if ( game.release.generation === 11 ) Hooks.on('getCompendiumEntryContext', (html, entryOptions) => {
     const compendiumSheet = game.packs.get(html[0].dataset.pack)?.apps[0];
     getCompendiumEntryContext(compendiumSheet, html, entryOptions);
   });

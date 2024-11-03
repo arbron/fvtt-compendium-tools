@@ -19,6 +19,7 @@ export class ReplaceEntry extends Application {
 
   /** @override */
   static get defaultOptions() {
+    const mergeObject = foundry.utils?.mergeObject ?? globalThis.mergeObject;
     return mergeObject(super.defaultOptions, {
       template: `${constants.templateRoot}/replaceEntry.hbs`,
       title: game.i18n.localize('CompendiumTools.replace.title'),

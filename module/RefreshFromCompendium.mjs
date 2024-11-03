@@ -15,6 +15,7 @@ export class RefreshFromCompendium extends Application {
 
   /** @override */
   static get defaultOptions() {
+    const mergeObject = foundry.utils?.mergeObject ?? globalThis.mergeObject;
     return mergeObject(super.defaultOptions, {
       template: `${constants.templateRoot}/refreshFromCompendium.hbs`,
       title: game.i18n.localize('CompendiumTools.RefreshTitle'),
@@ -64,6 +65,7 @@ export class RefreshFromCompendium extends Application {
       "-=permission": null, "-=sort": null, "-=_id": null,
       "flags.core.sourceId": this.object.getFlag("core", "sourceId")
     };
+    const mergeObject = foundry.utils?.mergeObject ?? globalThis.mergeObject;
     mergeObject(data, changes);
 
     this.object.update(data);

@@ -19,12 +19,10 @@
   "readme": "https://raw.githubusercontent.com/arbron/fvtt-compendium-tools/main/readme.md",
   "changelog": "https://raw.githubusercontent.com/arbron/fvtt-compendium-tools/main/changelog.md",
   "bugs": "https://github.com/arbron/fvtt-compendium-tools/issues",
-  "version": "0.5.0",
-  "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "10",
+  "version": "0.6.0",
   "compatibility": {
     "minimum": "9",
-    "verified": "10"
+    "verified": "12"
   },
   "relationships": {
     "requires": [
@@ -57,16 +55,5 @@
       "name": "Korean",
       "path": "lang/ko.json"
     }
-  ],
-  "dependencies": [
-    {
-      "name": "arbron-context-menus",
-      "type": "module",
-      "manifest": "https://github.com/arbron/fvtt-context-menu-library/releases/latest/download/module.json"
-    }
-  ],
-  "manifestPlusVersion": "1.2.0",
-  "flags": {
-    "allowBugReporter": true
-  }
+  ]
 }

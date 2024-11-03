@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.6.0
+ - Upgrade compatible core version to V12
+ - Set maximum compatible core version to V12
+ - Fix bug displaying context menu option in V12 [[#14]]
+
 # 0.5.0
  - Switch to using new `getCompendiumEntryContext` hook if using v10
  - Switch to single-file javascript release to avoid unnecessary downloads
