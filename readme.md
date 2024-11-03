@@ -1,5 +1,9 @@
 # Arbron's Compendium Tools
 
+> [!Caution]
+>
+> This module will no longer be updated to support core Foundry versions past V12, and the maximum core version has been locked.
+
 The best way to share content between worlds in Foundry VTT is to create a module to hold your compendium packs. Unfortunately the process of creating these modules and updating them with new content leaves much to be desired. This module provides several tools that should improve the process of creating and updating compendium modules.
 
 ![Release Version](https://img.shields.io/github/v/release/arbron/fvtt-compendium-tools)
