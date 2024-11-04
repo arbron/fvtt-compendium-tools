@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.6.1
+ - Fix manifest URL for context menu library
+
 # 0.6.0
  - Upgrade compatible core version to V12
  - Set maximum compatible core version to V12

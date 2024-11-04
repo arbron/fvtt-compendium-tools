@@ -19,7 +19,7 @@
   "readme": "https://raw.githubusercontent.com/arbron/fvtt-compendium-tools/main/readme.md",
   "changelog": "https://raw.githubusercontent.com/arbron/fvtt-compendium-tools/main/changelog.md",
   "bugs": "https://github.com/arbron/fvtt-compendium-tools/issues",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "compatibility": {
     "minimum": "9",
     "verified": "12"
@@ -29,7 +29,7 @@
       {
         "id": "arbron-context-menus",
         "type": "module",
-        "manifest": "https://gitlab.com/asacolips-projects/foundry-mods/archmage/-/raw/master/system.json",
+        "manifest": "https://raw.githubusercontent.com/arbron/fvtt-context-menu-library/refs/heads/main/module.json",
         "compatibility": {
           "minimum": "0.2.0",
           "verified": "0.3"
